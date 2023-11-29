@@ -12,34 +12,20 @@ import { IERC6551Account } from "erc6551/interfaces/IERC6551Account.sol";
 import { ERC6551AccountLib } from "erc6551/lib/ERC6551AccountLib.sol";
 import { SteveyWonder } from "../SteveyWonder.sol";
 
-contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
+contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[5] private colors = [
-		"#D07C4C",
-		"#4C69D0",
-		"#2D8D88",
-		"#8D2D44",
-		"#8D2D44"
-	];
 
 	address private _steveyWonderAddr;
 	address private _erc6551RegistryAddr;
 	address private _accImplementationAddr;
 	bytes32 private immutable _salt = bytes32(0);
 
-	struct TShirtColor {
-		string primary;
-		string secondary;
-	}
-
-	mapping(uint256 => TShirtColor) private _tshirtColor;
-
 	constructor(
 		address _initialOwner,
 		address _steveyWonder,
 		address _erc6551Registry,
 		address _accImplementation
-	) ERC721("HalfTShirt", "HTS") Ownable(_initialOwner) {
+	) ERC721("Shoes", "SHOE") Ownable(_initialOwner) {
 		_steveyWonderAddr = _steveyWonder;
 		_erc6551RegistryAddr = _erc6551Registry;
 		_accImplementationAddr = _accImplementation;
@@ -57,27 +43,9 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		);
 
 		_safeMint(to, tokenId);
-
-		bytes32 predictableRandom = keccak256(
-			abi.encodePacked(
-				tokenId,
-				blockhash(block.number - 1),
-				block.timestamp,
-				msg.sender,
-				address(this)
-			)
-		);
-
-		uint256 index1 = uint256(uint8(predictableRandom[0])) % 5;
-		uint256 index2 = uint256(uint8(predictableRandom[1])) % 5;
-
-		_tshirtColor[tokenId].primary = colors[index1];
-		_tshirtColor[tokenId].secondary = colors[index2];
 	}
 
-	function _tshirtURI(
-		uint256 _tokenId
-	) internal view returns (string memory) {
+	function _ShoesURI(uint256 _tokenId) internal view returns (string memory) {
 		return
 			string(
 				abi.encodePacked(
@@ -85,16 +53,12 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 					Base64.encode(
 						bytes(
 							abi.encodePacked(
-								'{"name": "SteveyWonder Tshirt #',
+								'{"name": "SteveyWonder Shoes #',
 								Strings.toString(_tokenId),
 								'", "image": "',
 								_generateBase64(_tokenId),
 								unicode'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
-								unicode'"attributes: [{"trait_type": "type", "value": "tshirt"}, {"trait_type": "primary", "value": ',
-								_tshirtColor[_tokenId].primary,
-								unicode'}, {"trait_type": "secondary", "value": "',
-								_tshirtColor[_tokenId].secondary,
-								unicode'"}]}'
+								unicode'"attributes: [{"trait_type": "type", "value": "shoes"}]}'
 							)
 						)
 					)
@@ -122,28 +86,20 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	function renderByTokenId(
 		uint256 _tokenId
 	) public view returns (string memory) {
-		return _tshirtSVG(_tokenId);
+		return _ShoesSVG(_tokenId);
 	}
 
-	function _tshirtSVG(uint256 _tokenId) public view returns (string memory) {
+	function _ShoesSVG(uint256 _tokenId) public view returns (string memory) {
+		uint256 salt = uint256(uint(_salt));
+
 		return
 			string.concat(
-				'<rect x="142" y="127.543" width="116" height="135.634" fill="',
-				_tshirtColor[_tokenId].primary,
-				'"/>',
-				'<mask id="path-19-inside-1_1055_604" fill="white">',
-				'<path d="M101 127.543H142V186.515H101V127.543Z"/>',
-				"</mask>",
-				'<path d="M101 127.543H142V186.515H101V127.543Z" fill="',
-				_tshirtColor[_tokenId].secondary,
-				'"/>',
-				'<path d="M141.5 127.543V186.515H142.5V127.543H141.5Z" fill="white" fill-opacity="0.24" mask="url(#path-19-inside-1_1055_604)"/>',
-				'<mask id="path-21-inside-2_1055_604" fill="white">',
-				'<path d="M299 127.543H258V186.515H299V127.543Z"/>',
-				"</mask>",
-				'<path d="M299 127.543H258V186.515H299V127.543Z" fill="',
-				_tshirtColor[_tokenId].secondary,
-				'"/>'
+				'<path id="',
+				Strings.toString(salt + _tokenId),
+				'" d="M146 383.086H190V385C190 386.657 188.657 388 187 388H149C147.343 388 146 386.657 146 385V383.086Z" fill="#F0EAEB"/>',
+				'<path d="M146 383.086C146 376.572 151.28 371.292 157.794 371.292H178.206C184.72 371.292 190 376.572 190 383.086V383.086H146V383.086Z" fill="black"/>',
+				'<path d="M210 383.085H254V385C254 386.657 252.657 388 251 388H213C211.343 388 210 386.657 210 385V383.085Z" fill="#F0EAEB"/>',
+				'<path d="M210 383.086C210 376.572 215.28 371.292 221.794 371.292H242.206C248.72 371.292 254 376.572 254 383.086V383.086H210V383.086Z" fill="black"/>'
 			);
 	}
 
@@ -152,7 +108,7 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	function tokenURI(
 		uint256 tokenId
 	) public view override returns (string memory) {
-		return _tshirtURI(tokenId);
+		return _ShoesURI(tokenId);
 	}
 
 	function _update(

@@ -33,13 +33,28 @@ contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
 
 	/* ------------------------------- Constructor ------------------------------ */
 	constructor(
-		address _initialOwner
-	) ERC721("Stevey", "STEV") Ownable(_initialOwner) {}
+		address _initialOwner,
+		address _erc6551RegistryAddr,
+		address _accImplementationAddr
+	) ERC721("Stevey", "STEV") Ownable(_initialOwner) {
+		_erc6551Registry = _erc6551RegistryAddr;
+		_accImplementation = _accImplementationAddr;
+	}
 
 	/* -------------------------------- Functions ------------------------------- */
-	function safeMint() public payable {
+	function safeMint() public payable returns (address) {
 		uint256 tokenId = _nextTokenId++;
 		_safeMint(msg.sender, tokenId);
+
+		address tba = IERC6551Registry(_erc6551Registry).createAccount(
+			_accImplementation,
+			bytes32(0),
+			block.chainid,
+			address(this),
+			tokenId
+		);
+
+		return tba;
 	}
 
 	function tokenURI(
@@ -82,7 +97,7 @@ contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
 	) internal view returns (string memory) {
 		return
 			string.concat(
-				'<svg width="300" height="300" viewBox="0 0 196 331" fill="none" xmlns="http://www.w3.org/2000/svg">',
+				'<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">',
 				renderByTokenId(_tokenId),
 				"</svg>"
 			);
@@ -115,18 +130,18 @@ contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
 	function SteveyWonderSvg() internal pure returns (string memory) {
 		return
 			string.concat(
-				'<rect width="48.9777" height="149.382" transform="matrix(1 0 0 -1 262.912 465.208)" fill="#EFA78C"/>',
-				'<path d="M184.547 465.208H233.525V315.826H184.547V465.208Z" fill="#EFA78C"/>',
-				'<rect width="48.9777" height="161.627" transform="matrix(1 0 0 -1 319.236 309.705)" fill="#EFA78C"/>',
-				'<rect width="48.9777" height="161.627" transform="matrix(1 0 0 -1 128.223 309.705)" fill="#EFA78C"/>',
-				'<rect x="177.199" y="148.078" width="142.035" height="168.973" fill="#E89B7F"/>',
-				'<rect x="199.24" y="59.9175" width="97.9563" height="88.1607" fill="#EFA78C"/>',
-				'<rect x="215.156" y="79.5088" width="19.5916" height="19.5916" fill="white"/>',
-				'<rect x="222.502" y="83.1821" width="12.2447" height="12.2447" fill="black"/>',
-				'<rect x="233.525" y="121.14" width="29.3874" height="12.2447" fill="#BB7156"/>',
-				'<rect x="261.686" y="79.5088" width="19.5916" height="19.5916" fill="white"/>',
-				'<rect x="261.686" y="83.1821" width="12.2447" height="12.2447" fill="black"/>',
-				'<path d="M319.237 317.051H177.201V378.273H244.546V364.804H251.892V378.273H319.237V317.051Z" fill="white"/>'
+				'<rect width="40" height="119.909" transform="matrix(1 0 0 -1 212 382.103)" fill="#EFA78C"/>',
+				'<path d="M148 382.103H188V262.194H148V382.103Z" fill="#EFA78C"/>',
+				'<rect width="40" height="129.737" transform="matrix(1 0 0 -1 258 257.28)" fill="#EFA78C"/>',
+				'<rect width="40" height="129.737" transform="matrix(1 0 0 -1 102 257.28)" fill="#EFA78C"/>',
+				'<rect x="142" y="127.543" width="116" height="135.634" fill="#E89B7F"/>',
+				'<rect x="160" y="56.7769" width="80.0007" height="70.7663" fill="#EFA78C"/>',
+				'<rect x="173" y="72.5029" width="16.0004" height="15.7261" fill="white"/>',
+				'<rect x="179" y="75.4512" width="10.0003" height="9.82882" fill="black"/>',
+				'<rect x="188" y="105.92" width="24.0006" height="9.82882" fill="#BB7156"/>',
+				'<rect x="210.998" y="72.5029" width="16.0004" height="15.7261" fill="white"/>',
+				'<rect x="210.998" y="75.4512" width="10.0003" height="9.82882" fill="black"/>',
+				'<path d="M258 263.177H142V312.32H197V301.509H203V312.32H258V263.177Z" fill="white"/>'
 			);
 	}
 
@@ -174,10 +189,10 @@ contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
 		address _nftAccessory,
 		uint256 _SteveyWondertokenId,
 		uint256 _accessoryTokenId
-	) internal {
+	) public {
 		require(
 			_nftAccessory == msg.sender,
-			"Only NFT accessory contract can set accessory."
+			"only nft accessory address can set accessory"
 		);
 
 		require(

@@ -4768,7 +4768,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Glasses: {
-      address: "0x589c65F88751Cf87447b055ba28832e2d4b178D6",
+      address: "0xB79BDcc70026cB4eeA50727cFF1328fD98879e06",
       abi: [
         {
           inputs: [
@@ -7819,7 +7819,7 @@ const deployedContracts = {
       },
     },
     TShirt: {
-      address: "0xd54d6FE4Fb4287044d3656b0fa6F414007d4605D",
+      address: "0x2Eee6daFf9B52Db1Bc81a057E0333eF241D5B214",
       abi: [
         {
           inputs: [

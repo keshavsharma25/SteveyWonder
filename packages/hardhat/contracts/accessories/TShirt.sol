@@ -89,12 +89,12 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								Strings.toString(_tokenId),
 								'", "image": "',
 								_generateBase64(_tokenId),
-								unicode'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
-								unicode'"attributes: [{"trait_type": "type", "value": "tshirt"}, {"trait_type": "primary", "value": ',
+								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
+								'"attributes": [{"trait_type": "type", "value": "tshirt"}, {"trait_type": "primary", "value": "',
 								_tshirtColor[_tokenId].primary,
-								unicode'}, {"trait_type": "secondary", "value": "',
+								'"}, {"trait_type": "secondary", "value": "',
 								_tshirtColor[_tokenId].secondary,
-								unicode'"}]}'
+								'"}]}'
 							)
 						)
 					)

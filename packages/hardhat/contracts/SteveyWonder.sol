@@ -5,6 +5,7 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import { ERC721Burnable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import { ERC721Enumerable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import { Base64 } from "@openzeppelin/contracts/utils/Base64.sol";
 import { IERC165 } from "@openzeppelin/contracts/interfaces/IERC165.sol";
 import { IERC6551Registry } from "erc6551/interfaces/IERC6551Registry.sol";
@@ -18,7 +19,13 @@ import { IERC721Custom } from "./interfaces/IERC721Custom.sol";
  * ERC6551 tokens.
  * @dev This contract is designed to be used with the ERC6551Registry and Account Proxy contract.
  */
-contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
+contract SteveyWonder is
+	ERC721,
+	ERC721Burnable,
+	ERC721Enumerable,
+	Ownable,
+	IERC4906
+{
 	/* ----------------------------- State Variables ---------------------------- */
 	address public immutable _erc6551Registry;
 	address public immutable _accImplementation;
@@ -147,7 +154,7 @@ contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
 
 	function supportsInterface(
 		bytes4 interfaceId
-	) public view override(IERC165, ERC721) returns (bool) {
+	) public view override(IERC165, ERC721, ERC721Enumerable) returns (bool) {
 		return super.supportsInterface(interfaceId);
 	}
 
@@ -214,6 +221,21 @@ contract SteveyWonder is ERC721, ERC721Burnable, Ownable, IERC4906 {
 			"invalid NFT Accessory address"
 		);
 		return activeAccessories[_nftAccessory][_SteveyWondertokenId];
+	}
+
+	function _update(
+		address to,
+		uint256 tokenId,
+		address auth
+	) internal override(ERC721, ERC721Enumerable) returns (address) {
+		return super._update(to, tokenId, auth);
+	}
+
+	function _increaseBalance(
+		address account,
+		uint128 value
+	) internal override(ERC721, ERC721Enumerable) {
+		super._increaseBalance(account, value);
 	}
 
 	function getTBAAddress(uint256 tokenId) public view returns (address) {

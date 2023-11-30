@@ -57,8 +57,8 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								Strings.toString(_tokenId),
 								'", "image": "',
 								_generateBase64(_tokenId),
-								unicode'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
-								unicode'"attributes: [{"trait_type": "type", "value": "shoes"}]}'
+								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
+								'"attributes": [{"trait_type": "type", "value": "shoes"}]}'
 							)
 						)
 					)

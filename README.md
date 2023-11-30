@@ -1,5 +1,7 @@
 # 🏗 SteveyWonder
 
+An ERC6551 implementation NFT that is composable i.e. one can dress the character of Stevey Wonder, with various other NFTs that could be sent to the token-bound account attached to the main NFT i.e. SteveyWonder. The purpose of this project is to show the applications of ERC6551 and learn new things along way. The project is still a work in progress🚧, so somethings might break. 
+
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
   <a href="https://scaffoldeth.io">Website</a>

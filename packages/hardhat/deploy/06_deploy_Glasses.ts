@@ -1,5 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { readFileSync } from "fs";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -7,7 +8,7 @@ import { DeployFunction } from "hardhat-deploy/types";
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployGlasses: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -21,22 +22,24 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  const argumentsJson = JSON.parse(readFileSync("./arguments.json", "utf8"));
+
+  await deploy("Glasses", {
     from: deployer,
-    // Contract constructor arguments
-    args: [deployer],
     log: true,
+    // constructor Args
+    args: [deployer, argumentsJson.SteveyWonder, argumentsJson.ERC6551Registry, argumentsJson.ERC6551AccountImpl],
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
   // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  // const Glasses = await hre.ethers.getContract("Glasses", deployer);
 };
 
-export default deployYourContract;
+export default deployGlasses;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+// e.g. yarn deploy --tags Glasses
+deployGlasses.tags = ["Glasses"];

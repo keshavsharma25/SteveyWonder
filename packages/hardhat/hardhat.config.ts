@@ -111,7 +111,7 @@ const config: HardhatUserConfig = {
       accounts: [deployerPrivateKey],
     },
     baseGoerli: {
-      url: "https://goerli.base.org",
+      url: `https://base-goerli.g.alchemy.com/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
     },
     scrollSepolia: {

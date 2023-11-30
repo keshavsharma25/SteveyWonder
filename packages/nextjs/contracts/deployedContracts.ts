@@ -4271,7 +4271,7 @@ const deployedContracts = {
   },
   80001: {
     Account: {
-      address: "0x805566729E87e7D6C06dB07b2984436D2ce82FE0",
+      address: "0x1162797a9EDFF0Ce0c3d26dC1F0c35FbE8dFb703",
       abi: [
         {
           inputs: [],
@@ -4636,7 +4636,7 @@ const deployedContracts = {
       },
     },
     ERC6551Registry: {
-      address: "0x6851b17D206Fb6820780F797343AFfC3a1f0b556",
+      address: "0x34356305ce874880AC151B6F939Cc8C61c7F797c",
       abi: [
         {
           inputs: [],
@@ -4768,7 +4768,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     Glasses: {
-      address: "0xB79BDcc70026cB4eeA50727cFF1328fD98879e06",
+      address: "0xef001ab8fea32f44053921ac66a4c3f1563ea9d1",
       abi: [
         {
           inputs: [
@@ -5482,7 +5482,7 @@ const deployedContracts = {
       },
     },
     Pants: {
-      address: "0x844137edE778838D836b38c9469B0F3bAb97425e",
+      address: "0x1c49826dCF36F62212D5A44cD0DC3770Bd133b78",
       abi: [
         {
           inputs: [
@@ -6196,7 +6196,7 @@ const deployedContracts = {
       },
     },
     Shoes: {
-      address: "0x1212d09227f6838A716644EF605D4F7304215dec",
+      address: "0x8B58ccc0D7985794c39a6fe344f4fAA54A285460",
       abi: [
         {
           inputs: [
@@ -6910,7 +6910,7 @@ const deployedContracts = {
       },
     },
     SteveyWonder: {
-      address: "0xe3e6dC43026F82e5f393CF5220C108783e6317F5",
+      address: "0xF2645BA8bF1A41128b9ef0b37652910fA3f7a768",
       abi: [
         {
           inputs: [
@@ -7819,7 +7819,7 @@ const deployedContracts = {
       },
     },
     TShirt: {
-      address: "0x2Eee6daFf9B52Db1Bc81a057E0333eF241D5B214",
+      address: "0x494aBbB8D465c7BF787ac81A40Ef912De9ec18B0",
       abi: [
         {
           inputs: [

@@ -39,7 +39,7 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		address _steveyWonder,
 		address _erc6551Registry,
 		address _accImplementation
-	) ERC721("HalfTShirt", "HTS") Ownable(_initialOwner) {
+	) ERC721("TShirt", "TST") Ownable(_initialOwner) {
 		_steveyWonderAddr = _steveyWonder;
 		_erc6551RegistryAddr = _erc6551Registry;
 		_accImplementationAddr = _accImplementation;

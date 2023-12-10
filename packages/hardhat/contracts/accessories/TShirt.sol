@@ -143,7 +143,8 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 				"</mask>",
 				'<path d="M299 127.543H258V186.515H299V127.543Z" fill="',
 				_tshirtColor[_tokenId].secondary,
-				'"/>'
+				'"/>',
+				'<path d="M258.5 127.543V186.515H257.5V127.543H258.5Z" fill="white" fill-opacity="0.24" mask="url(#path-21-inside-2_1055_604)"/>'
 			);
 	}
 

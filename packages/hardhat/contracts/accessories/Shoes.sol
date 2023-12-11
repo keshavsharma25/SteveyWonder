@@ -103,6 +103,23 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			);
 	}
 
+	function contractURI() public pure returns (string memory) {
+		string memory json = string.concat(
+			'{"name": "SteveyWonder\'s Shoes Collection", "description": "This is a collection of SteveyWonder\'s Shoes NFTs.", "image": "',
+			'", "external_link": "https://steveywonder.vercel.app/",',
+			'"collaborators": [""]'
+			'"}'
+		);
+
+		return
+			string(
+				abi.encodePacked(
+					"data:application/json;base64,",
+					Base64.encode(bytes(json))
+				)
+			);
+	}
+
 	/* --------------------------- override functions --------------------------- */
 
 	function tokenURI(

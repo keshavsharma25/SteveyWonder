@@ -28,8 +28,8 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	bytes32 private immutable _salt = bytes32(0);
 
 	struct TShirtColor {
-		string primary;
-		string secondary;
+		uint256 primaryIndex;
+		uint256 secondaryIndex;
 	}
 
 	mapping(uint256 => TShirtColor) private _tshirtColor;
@@ -71,8 +71,8 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		uint256 index1 = uint256(uint8(predictableRandom[0])) % 5;
 		uint256 index2 = uint256(uint8(predictableRandom[1])) % 5;
 
-		_tshirtColor[tokenId].primary = colors[index1];
-		_tshirtColor[tokenId].secondary = colors[index2];
+		_tshirtColor[tokenId].primaryIndex = index1;
+		_tshirtColor[tokenId].secondaryIndex = index2;
 	}
 
 	function _tshirtURI(
@@ -91,9 +91,9 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								_generateBase64(_tokenId),
 								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
 								'"attributes": [{"trait_type": "type", "value": "tshirt"}, {"trait_type": "primary", "value": "',
-								_tshirtColor[_tokenId].primary,
+								colors[_tshirtColor[_tokenId].primaryIndex],
 								'"}, {"trait_type": "secondary", "value": "',
-								_tshirtColor[_tokenId].secondary,
+								colors[_tshirtColor[_tokenId].secondaryIndex],
 								'"}]}'
 							)
 						)
@@ -129,22 +129,39 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<rect x="142" y="127.543" width="116" height="135.634" fill="',
-				_tshirtColor[_tokenId].primary,
+				colors[_tshirtColor[_tokenId].primaryIndex],
 				'"/>',
 				'<mask id="path-19-inside-1_1055_604" fill="white">',
 				'<path d="M101 127.543H142V186.515H101V127.543Z"/>',
 				"</mask>",
 				'<path d="M101 127.543H142V186.515H101V127.543Z" fill="',
-				_tshirtColor[_tokenId].secondary,
+				colors[_tshirtColor[_tokenId].secondaryIndex],
 				'"/>',
 				'<path d="M141.5 127.543V186.515H142.5V127.543H141.5Z" fill="white" fill-opacity="0.24" mask="url(#path-19-inside-1_1055_604)"/>',
 				'<mask id="path-21-inside-2_1055_604" fill="white">',
 				'<path d="M299 127.543H258V186.515H299V127.543Z"/>',
 				"</mask>",
 				'<path d="M299 127.543H258V186.515H299V127.543Z" fill="',
-				_tshirtColor[_tokenId].secondary,
+				colors[_tshirtColor[_tokenId].secondaryIndex],
 				'"/>',
 				'<path d="M258.5 127.543V186.515H257.5V127.543H258.5Z" fill="white" fill-opacity="0.24" mask="url(#path-21-inside-2_1055_604)"/>'
+			);
+	}
+
+	function contractURI() public pure returns (string memory) {
+		string memory json = string.concat(
+			'{"name": "SteveyWonder\'s Tshirt Collection", "description": "This is a collection of SteveyWonder\'s Tshirt NFTs.", "image": "',
+			'", "external_link": "https://steveywonder.vercel.app/",',
+			'"collaborators": [""]'
+			'"}'
+		);
+
+		return
+			string(
+				abi.encodePacked(
+					"data:application/json;base64,",
+					Base64.encode(bytes(json))
+				)
 			);
 	}
 

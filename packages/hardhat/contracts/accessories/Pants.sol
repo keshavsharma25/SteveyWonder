@@ -28,7 +28,7 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	bytes32 private immutable _salt = bytes32(0);
 
 	struct PantsColor {
-		string primary;
+		uint256 colorIndex;
 	}
 
 	mapping(uint256 => PantsColor) private _pantsColor;
@@ -67,9 +67,9 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 index1 = uint256(uint8(predictableRandom[0])) % 5;
-
-		_pantsColor[tokenId].primary = colors[index1];
+		_pantsColor[tokenId].colorIndex =
+			uint256(uint8(predictableRandom[0])) %
+			5;
 	}
 
 	function _pantsURI(uint256 _tokenId) internal view returns (string memory) {
@@ -85,8 +85,8 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								'", "image": "',
 								_generateBase64(_tokenId),
 								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
-								'"attributes": [{"trait_type": "type", "value": "half-Pants"}, {"trait_type": "primary", "value": "',
-								_pantsColor[_tokenId].primary,
+								'"attributes": [{"trait_type": "type", "value": "half-Pants"}, {"trait_type": "color", "value": "',
+								colors[_pantsColor[_tokenId].colorIndex],
 								'"}]}'
 							)
 						)
@@ -122,8 +122,25 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<path fill-rule="evenodd" clip-rule="evenodd" d="M258.002 263.177H142.002V285.783V318.217V375.224H194.002V318.217H206.002V375.223H258.002V285.783H258.002V263.177Z" fill="',
-				_pantsColor[_tokenId].primary,
+				colors[_pantsColor[_tokenId].colorIndex],
 				'"/>'
+			);
+	}
+
+	function contractURI() public pure returns (string memory) {
+		string memory json = string.concat(
+			'{"name": "SteveyWonder\'s Pants Collection", "description": "This is a collection of SteveyWonder\'s Pants NFTs.", "image": "',
+			'", "external_link": "https://steveywonder.vercel.app/",',
+			'"collaborators": [""]'
+			'"}'
+		);
+
+		return
+			string(
+				abi.encodePacked(
+					"data:application/json;base64,",
+					Base64.encode(bytes(json))
+				)
 			);
 	}
 

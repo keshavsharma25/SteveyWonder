@@ -64,6 +64,23 @@ contract SteveyWonder is
 		return tba;
 	}
 
+	function contractURI() public pure returns (string memory) {
+		string memory json = string.concat(
+			'{"name": "SteveyWonder", "description": "This is a collection of SteveyWonder NFTs.", "image": "',
+			'", "external_link": "https://steveywonder.vercel.app/",',
+			'"collaborators": [""]'
+			'"}'
+		);
+
+		return
+			string(
+				abi.encodePacked(
+					"data:application/json;base64,",
+					Base64.encode(bytes(json))
+				)
+			);
+	}
+
 	function tokenURI(
 		uint256 tokenId
 	) public view override returns (string memory) {

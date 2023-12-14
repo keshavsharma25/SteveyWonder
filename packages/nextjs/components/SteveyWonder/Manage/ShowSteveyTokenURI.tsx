@@ -30,7 +30,7 @@ export const ShowSteveyTokenURI = ({ tokenId }: Props) => {
 
   return (
     <>
-      <Image src={`data:image/svg+xml;base64,${tokenURI}`} alt="SteveyWonder Token" width={400} height={400} />
+      <Image src={`data:image/svg+xml;base64,${tokenURI}`} alt="SteveyWonder Token" width={250} height={250} />
     </>
   );
 };

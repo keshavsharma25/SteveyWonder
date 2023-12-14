@@ -21,10 +21,10 @@ export const menuLinks: HeaderMenuLink[] = [
     label: "SteveyWonder",
     href: "/steveywonder",
   },
-  // {
-  //   label: "Accessories",
-  //   href: "/accessories",
-  // },
+  {
+    label: "Accessories",
+    href: "/accessories",
+  },
   {
     label: "Debug Contracts",
     href: "/debug",

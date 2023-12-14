@@ -24,7 +24,7 @@ const deployHairs: DeployFunction = async function (hre: HardhatRuntimeEnvironme
 
   const argumentsJson = JSON.parse(readFileSync("./arguments.json", "utf8"));
 
-  await deploy("Glasses", {
+  await deploy("Hairs", {
     from: deployer,
     log: true,
     // constructor Args
@@ -42,4 +42,4 @@ export default deployHairs;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags Glasses
-deployHairs.tags = ["Glasses"];
+deployHairs.tags = ["Hairs"];

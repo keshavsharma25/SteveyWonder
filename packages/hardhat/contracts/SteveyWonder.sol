@@ -84,6 +84,7 @@ contract SteveyWonder is
 	function tokenURI(
 		uint256 tokenId
 	) public view override returns (string memory) {
+		require(tokenId < _nextTokenId, "Token ID does not exist");
 		return _steveyWonderTokenURI(tokenId);
 	}
 

@@ -7,7 +7,9 @@ type Props = {
   tokenId: bigint;
 };
 
-export const MintAccessories = ({ name, contractName, tokenId }: Props) => {
+export const MintAccs = ({ name, contractName, tokenId }: Props) => {
+  // const { address } = useAccount();
+
   const { write } = useScaffoldContractWrite({
     contractName: contractName,
     functionName: "safeMint",
@@ -19,7 +21,7 @@ export const MintAccessories = ({ name, contractName, tokenId }: Props) => {
       onClick={() => {
         write?.();
       }}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      className="bg-[#3C44FF] hover:bg-[#3036cc] text-white font-bold py-2 px-4 rounded"
     >
       {name}
     </button>

@@ -74,6 +74,9 @@ module.exports = {
     ],
   },
   theme: {
+    fontFamily: {
+      grotesk: ["ClashGrotesk"],
+    },
     extend: {
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",

@@ -36,8 +36,8 @@ export const SteveyWonderCard = ({ id, className }: Props) => {
               push(`/steveywonder/${Number(tokenId)}`);
             }}
           >
-            <div className="flex justify-center bg-primary rounded-xl">
-              <ShowTokenURI contractName="SteveyWonder" tokenId={tokenId as bigint} width={300} height={300} />
+            <div className="flex items-center justify-center bg-primary rounded-xl">
+              <ShowTokenURI contractName="SteveyWonder" tokenId={tokenId as bigint} width={420} height={420} />
             </div>
             <div className="flex flex-row justify-between px-6 pt-4 text-xl font-medium">
               <span>Stevey Wonder</span>

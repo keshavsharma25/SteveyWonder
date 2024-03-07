@@ -18,13 +18,11 @@ export const useTokenURI = ({ contractName, tokenId }: options) => {
 
   useEffect(() => {
     let _tokenURI = uri as string;
-    console.log(_tokenURI);
     _tokenURI = _tokenURI?.split("data:application/json;base64,")[1];
 
     if (uri != undefined) {
       const jsonString = Buffer.from(_tokenURI as string, "base64").toString("utf-8");
       const parseTokenURI = JSON.parse(jsonString);
-      console.log(parseTokenURI);
       setTokenURI(parseTokenURI.image);
     }
   }, [uri]);

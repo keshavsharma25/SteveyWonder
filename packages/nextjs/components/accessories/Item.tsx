@@ -11,7 +11,9 @@ export const Item = ({ item, tokenId }: Props) => {
   return (
     <div className="w-[200px]">
       <div className="relative">
-        <Image src={`./accessories/${item}.png`} alt={item} fill className="w-full h-full" />
+        <div className="w-full h-full">
+          <Image src={`./accessories/${item}.png`} alt={item} fill />
+        </div>
       </div>
       <div className="flex flex-row justify-between">
         <div>{item}</div>

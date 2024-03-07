@@ -95,8 +95,8 @@ export const Header = () => {
           )}
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-          <div className="flex relative w-10 h-10 rounded-full overflow-hidden">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/wonder.png" />
+          <div className="flex relative w-10 h-10 rounded-full overflow-hidden cursor-pointer">
+            <Image alt="SE2 logo" fill src="/wonder.png" />
           </div>
           <div className="flex flex-col px-1">
             <span className="font-medium">Stevey Wonder</span>

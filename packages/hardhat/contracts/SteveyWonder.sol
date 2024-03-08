@@ -130,7 +130,7 @@ contract SteveyWonder is
 
 	function renderByTokenId(
 		uint256 _tokenId
-	) internal view returns (string memory) {
+	) public view returns (string memory) {
 		string memory render = SteveyWonderSvg();
 
 		for (uint256 i = 0; i < nftAccessoryAddrs.length; i++) {
@@ -146,28 +146,27 @@ contract SteveyWonder is
 	}
 
 	function renderAccessory(
-		address nftAccessory,
-		uint256 _tokenId
+	address nftAccessory,
+	uint256 _tokenId
 	) internal view returns (string memory) {
-		return IERC721Custom(nftAccessory).renderByTokenId(_tokenId);
+	return IERC721Custom(nftAccessory).renderByTokenId(_tokenId);
 	}
 
 	function SteveyWonderSvg() internal pure returns (string memory) {
-		return
-			string.concat(
-				'<rect width="40" height="119.909" transform="matrix(1 0 0 -1 212 382.103)" fill="#EFA78C"/>',
-				'<path d="M148 382.103H188V262.194H148V382.103Z" fill="#EFA78C"/>',
-				'<rect width="40" height="129.737" transform="matrix(1 0 0 -1 258 257.28)" fill="#EFA78C"/>',
-				'<rect width="40" height="129.737" transform="matrix(1 0 0 -1 102 257.28)" fill="#EFA78C"/>',
-				'<rect x="142" y="127.543" width="116" height="135.634" fill="#E89B7F"/>',
-				'<rect x="160" y="56.7769" width="80.0007" height="70.7663" fill="#EFA78C"/>',
-				'<rect x="173" y="72.5029" width="16.0004" height="15.7261" fill="white"/>',
-				'<rect x="179" y="75.4512" width="10.0003" height="9.82882" fill="black"/>',
-				'<rect x="188" y="105.92" width="24.0006" height="9.82882" fill="#BB7156"/>',
-				'<rect x="210.998" y="72.5029" width="16.0004" height="15.7261" fill="white"/>',
-				'<rect x="210.998" y="75.4512" width="10.0003" height="9.82882" fill="black"/>',
-				'<path d="M258 263.177H142V312.32H197V301.509H203V312.32H258V263.177Z" fill="white"/>'
-			);
+	return
+	string.concat(
+	'<rect width="42.9268" height="128.682" transform="matrix(1 0 0 -1 249.121 427.671)" fill="#EFA78C"/>',
+	'<path d="M180.438 427.671H223.364V298.989H180.438V427.671Z" fill="#EFA78C"/>',
+	'<rect width="42.9268" height="139.23" transform="matrix(1 0 0 -1 298.486 293.716)" fill="#EFA78C"/>',
+	'<rect width="42.9268" height="139.23" transform="matrix(1 0 0 -1 131.072 293.716)" fill="#EFA78C"/>',
+	'<rect x="174" y="154.485" width="124.488" height="145.559" fill="#E89B7F"/>',
+	'<rect x="193.316" y="78.5439" width="85.8544" height="75.9443" fill="#EFA78C"/>',
+	'<rect x="207.268" y="95.4209" width="17.1712" height="16.8768" fill="white"/>',
+	'<rect x="213.709" y="98.584" width="10.732" height="10.548" fill="black"/>''<rect x="223.363" y="131.282" width="25.7567" height="10.548" fill="#BB7156"/>',
+	'<rect x="248.047" y="95.4209" width="17.1712" height="16.8768" fill="white"/>',
+	'<rect x="248.047" y="98.584" width="10.732" height="10.548" fill="black"/>',
+	'<path d="M298.484 300.046H173.996V352.785H233.02V341.182H239.459V352.785H298.484V300.046Z" fill="white"/>'
+	);
 	}
 
 	function supportsInterface(

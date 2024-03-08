@@ -5,7 +5,7 @@ import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 type Option = {
   name: ContractName;
-  address: Address;
+  address: Address | undefined;
 };
 
 export const useBalanceOfOwner = ({ name, address }: Option) => {

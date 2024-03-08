@@ -4,7 +4,7 @@ import { ContractName } from "~~/utils/scaffold-eth/contract";
 
 type options = {
   contractName: ContractName;
-  tokenId: bigint;
+  tokenId: bigint | undefined;
 };
 
 export const useTokenURI = ({ contractName, tokenId }: options) => {

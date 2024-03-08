@@ -1,40 +1,30 @@
-import { ShowTokenURI } from "../common/ShowTokenURI";
-import { OptionType } from "./Select";
-import { useAccount } from "wagmi";
+import { useEffect } from "react";
+import { Address } from "viem";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useTokenURI } from "~~/hooks/steveywonder/useTokenURI";
+import { Option } from "~~/types/steveywonder";
 
 type Props = {
-  option: OptionType;
-  tba: string;
-  tokenIndex: bigint;
+  index: number;
+  option: Option;
+  tba: Address | undefined;
 };
 
-export const Item = ({ option, tba, tokenIndex }: Props) => {
-  const { address } = useAccount();
-
+export const Item = ({ index, option, tba }: Props) => {
   const { data: tokenId } = useScaffoldContractRead({
     contractName: option,
     functionName: "tokenOfOwnerByIndex",
-    args: [tba, tokenIndex],
+    args: [tba, BigInt(index)],
   });
 
-  const { data: tokenOwner } = useScaffoldContractRead({
+  const { tokenURI, isLoading } = useTokenURI({
     contractName: option,
-    functionName: "ownerOf",
-    args: [tokenId],
+    tokenId,
   });
 
-  return (
-    <div>
-      {address === tokenOwner ? (
-        <div>
-          {tokenId !== undefined && <ShowTokenURI contractName={option} height={200} width={200} tokenId={tokenId} />}
-        </div>
-      ) : (
-        <div className="cursor-pointer">
-          {tokenId !== undefined && <ShowTokenURI contractName={option} height={200} width={200} tokenId={tokenId} />}
-        </div>
-      )}
-    </div>
-  );
+  useEffect(() => {
+    console.log(tokenURI, isLoading);
+  }, [tokenURI, isLoading]);
+
+  return <div></div>;
 };

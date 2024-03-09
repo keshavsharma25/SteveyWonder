@@ -10,7 +10,12 @@ type options = {
 export const useTokenURI = ({ contractName, tokenId }: options) => {
   const [tokenURI, setTokenURI] = useState<string>("");
 
-  const { data: uri, isLoading } = useScaffoldContractRead({
+  const {
+    data: uri,
+    isLoading,
+    error,
+    isError,
+  } = useScaffoldContractRead({
     contractName,
     functionName: "tokenURI",
     args: [tokenId],
@@ -27,5 +32,5 @@ export const useTokenURI = ({ contractName, tokenId }: options) => {
     }
   }, [uri]);
 
-  return { tokenURI, isLoading };
+  return { tokenURI, isLoading, isError, error };
 };

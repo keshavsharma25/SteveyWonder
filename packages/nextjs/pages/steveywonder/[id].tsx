@@ -1,13 +1,10 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { ItemContainer } from "~~/components/steveywonder";
 import { ShowSteveyWonder } from "~~/components/steveywonder/main/ShowSteveyWonder";
-import { useTokenURI } from "~~/hooks/steveywonder/useTokenURI";
+import { useRenderTokenSVGWithoutBg } from "~~/hooks/steveywonder/useRenderTokenSVGWithoutBg";
 
 const SteveyWonderId = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { tokenURI } = useTokenURI({
-    contractName: "SteveyWonder",
-    tokenId: BigInt(id),
-  });
+  const { base64Image } = useRenderTokenSVGWithoutBg(BigInt(id));
 
   return (
     <section className="flex flex-1 justify-center items-center gap-12">
@@ -17,7 +14,7 @@ const SteveyWonderId = ({ id }: InferGetServerSidePropsType<typeof getServerSide
         </div>
       ) : (
         <div className="flex gap-12">
-          <ShowSteveyWonder data={tokenURI} width={518} height={607} />
+          <ShowSteveyWonder data={base64Image} width={518} height={607} />
           <div className={"bg-[#161728] w-[44rem] p-10 rounded-2xl shadow-md"}>
             <ItemContainer tokenId={Number(id)} />
           </div>

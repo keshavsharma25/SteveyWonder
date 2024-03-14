@@ -1,5 +1,5 @@
 type props = {
-  data: string;
+  data: string | undefined;
   height: number;
   width: number;
 };
@@ -512,7 +512,7 @@ export const ShowSteveyWonder = ({ data, height, width }: props) => {
           fill-opacity="0.7"
         />
       </g>
-      <image href={`data:image/svg+xml;base64,${data}`} height={height} width={width} />
+      {data && <image href={`data:image/svg+xml;base64,${data}`} height={height} width={width} />}
       <defs>
         <filter
           id="filter0_f_0_1"

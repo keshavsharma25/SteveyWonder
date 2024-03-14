@@ -28,7 +28,7 @@ const deploySteveyWonder: DeployFunction = async function (hre: HardhatRuntimeEn
     from: deployer,
     log: true,
     // constructor Args
-    args: [deployer, argumentsJson.ERC6551Registry, argumentsJson.ERC6551AccountImpl],
+    args: [deployer, argumentsJson.ERC6551Registry, argumentsJson.ERC6551AccountImpl, argumentsJson.Background],
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,

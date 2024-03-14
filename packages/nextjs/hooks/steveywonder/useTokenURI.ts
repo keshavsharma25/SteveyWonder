@@ -12,13 +12,14 @@ export const useTokenURI = ({ contractName, tokenId }: options) => {
 
   const {
     data: uri,
-    isLoading,
     error,
     isError,
   } = useScaffoldContractRead({
     contractName,
     functionName: "tokenURI",
     args: [tokenId],
+    watch: true,
+    cacheTime: 30_000,
   });
 
   useEffect(() => {
@@ -32,5 +33,5 @@ export const useTokenURI = ({ contractName, tokenId }: options) => {
     }
   }, [uri]);
 
-  return { tokenURI, isLoading, isError, error };
+  return { tokenURI, isError, error };
 };

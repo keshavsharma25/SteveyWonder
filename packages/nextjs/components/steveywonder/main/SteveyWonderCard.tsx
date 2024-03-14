@@ -6,46 +6,39 @@ import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { cn } from "~~/utils/cn";
 
 type Props = {
-  id: bigint;
+  idx: bigint;
   className?: string;
 };
 
-export const SteveyWonderCard = ({ id, className }: Props) => {
+export const SteveyWonderCard = ({ idx, className }: Props) => {
   const { address } = useAccount();
   const { push } = useRouter();
 
-  const { data: tokenId, isLoading } = useScaffoldContractRead({
+  const { data: tokenId } = useScaffoldContractRead({
     contractName: "SteveyWonder",
     functionName: "tokenOfOwnerByIndex",
-    args: [address, id],
+    args: [address, idx],
     watch: true,
   });
 
   return (
-    <div>
-      {isLoading ? (
-        <span className="loading loading-bars loading-lg"></span>
-      ) : (
-        <>
-          <div
-            className={cn(
-              "max-w-fit max-h-fit p-4 rounded-xl bg-[#161829] border border-gray-100 border-opacity-5 cursor-pointer",
-              className,
-            )}
-            onClick={() => {
-              push(`/steveywonder/${Number(tokenId)}`);
-            }}
-          >
-            <div className="flex items-center justify-center bg-primary rounded-xl">
-              <ShowTokenURI contractName="SteveyWonder" tokenId={tokenId as bigint} width={420} height={420} />
-            </div>
-            <div className="flex flex-row justify-between px-6 pt-4 text-xl font-medium">
-              <span>Stevey Wonder</span>
-              <span>#{Number(tokenId)}</span>
-            </div>
-          </div>
-        </>
-      )}
+    <div
+      className={cn("p-4 rounded-xl bg-[#161829] border border-gray-100 border-opacity-5 cursor-pointer", className)}
+      onClick={() => {
+        push(`/steveywonder/${Number(tokenId)}`);
+      }}
+    >
+      <div className="flex items-center justify-center bg-primary rounded-xl overflow-hidden">
+        <ShowTokenURI contractName="SteveyWonder" tokenId={tokenId as bigint} width={420} height={420} />
+      </div>
+      <div className="flex flex-row justify-between px-6 pt-4 text-xl font-medium">
+        <span>Stevey Wonder</span>
+        {!Number.isNaN(Number(tokenId)) ? (
+          <span>#{Number(tokenId)}</span>
+        ) : (
+          <span className="loading loading-dots loading-md"></span>
+        )}
+      </div>
     </div>
   );
 };

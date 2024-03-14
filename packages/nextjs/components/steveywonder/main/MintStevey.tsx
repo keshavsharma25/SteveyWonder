@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const MintStevey = ({ name, className }: Props) => {
-  const { writeAsync, isSuccess } = useScaffoldContractWrite({
+  const { writeAsync, isSuccess, isLoading } = useScaffoldContractWrite({
     contractName: "SteveyWonder",
     functionName: "safeMint",
   });
@@ -28,9 +28,10 @@ export const MintStevey = ({ name, className }: Props) => {
   return (
     <button
       onClick={handleMintButton}
+      disabled={isLoading}
       className={cn("px-4 py-4 rounded-lg cursor-pointer bg-[#3C44FF] font-medium", className)}
     >
-      {name}
+      {isLoading ? <span className="loading loading-spinner loading-sm"></span> : name}
     </button>
   );
 };

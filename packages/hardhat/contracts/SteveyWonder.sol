@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
@@ -11,6 +11,7 @@ import { IERC165 } from "@openzeppelin/contracts/interfaces/IERC165.sol";
 import { IERC6551Registry } from "erc6551/interfaces/IERC6551Registry.sol";
 import { IERC4906 } from "./interfaces/IERC4906.sol";
 import { IERC721Custom } from "./interfaces/IERC721Custom.sol";
+import { Background } from "./helpers/Background.sol";
 
 /**
  * @title SteveyWonder
@@ -29,6 +30,7 @@ contract SteveyWonder is
 	/* ----------------------------- State Variables ---------------------------- */
 	address public immutable _erc6551Registry;
 	address public immutable _accImplementation;
+	Background public immutable _background;
 	bytes32 public immutable salt = bytes32(0);
 
 	uint256 private _nextTokenId = 1;
@@ -42,10 +44,12 @@ contract SteveyWonder is
 	constructor(
 		address _initialOwner,
 		address _erc6551RegistryAddr,
-		address _accImplementationAddr
+		address _accImplementationAddr,
+		address _backgroundAddr
 	) ERC721("Stevey", "STEV") Ownable(_initialOwner) {
 		_erc6551Registry = _erc6551RegistryAddr;
 		_accImplementation = _accImplementationAddr;
+		_background = Background(_backgroundAddr);
 	}
 
 	/* -------------------------------- Functions ------------------------------- */
@@ -101,7 +105,7 @@ contract SteveyWonder is
 							abi.encodePacked(
 								'{"name": "SteveyWonder", "image": "',
 								svg,
-								'", "description": "This is a Character NFT',
+								'", "description": "SteveyWonder Character NFT',
 								" based on the implementation of ERC6551 and its application.",
 								' This NFT account contains other accessories as NFTs."}'
 							)
@@ -114,17 +118,39 @@ contract SteveyWonder is
 	function _generateBase64(
 		uint256 _tokenId
 	) internal view returns (string memory) {
-		return Base64.encode(bytes(_generateSVG(_tokenId)));
+		return Base64.encode(bytes(generateSVGwithBackground(_tokenId)));
 	}
 
-	function _generateSVG(
+	function generateSVGwithBackground(
 		uint256 _tokenId
-	) internal view returns (string memory) {
+	) public view returns (string memory) {
+		return
+			string.concat(
+				'<svg width="472" height="472" viewBox="0 0 472 472" fill="none" xmlns="http://www.w3.org/2000/svg">',
+				_addBackground(_tokenId),
+				"</svg>"
+			);
+	}
+
+	function generateSVGwithoutBackground(
+		uint256 _tokenId
+	) public view returns (string memory) {
 		return
 			string.concat(
 				'<svg width="472" height="472" viewBox="0 0 472 472" fill="none" xmlns="http://www.w3.org/2000/svg">',
 				renderByTokenId(_tokenId),
 				"</svg>"
+			);
+	}
+
+	function _addBackground(
+		uint256 _tokenId
+	) internal view returns (string memory) {
+		return
+			string.concat(
+				_background.getHeadBackground(),
+				renderByTokenId(_tokenId),
+				_background.getTailBackground()
 			);
 	}
 
@@ -146,27 +172,28 @@ contract SteveyWonder is
 	}
 
 	function renderAccessory(
-	address nftAccessory,
-	uint256 _tokenId
+		address nftAccessory,
+		uint256 _tokenId
 	) internal view returns (string memory) {
-	return IERC721Custom(nftAccessory).renderByTokenId(_tokenId);
+		return IERC721Custom(nftAccessory).renderByTokenId(_tokenId);
 	}
 
 	function SteveyWonderSvg() internal pure returns (string memory) {
-	return
-	string.concat(
-	'<rect width="42.9268" height="128.682" transform="matrix(1 0 0 -1 249.121 427.671)" fill="#EFA78C"/>',
-	'<path d="M180.438 427.671H223.364V298.989H180.438V427.671Z" fill="#EFA78C"/>',
-	'<rect width="42.9268" height="139.23" transform="matrix(1 0 0 -1 298.486 293.716)" fill="#EFA78C"/>',
-	'<rect width="42.9268" height="139.23" transform="matrix(1 0 0 -1 131.072 293.716)" fill="#EFA78C"/>',
-	'<rect x="174" y="154.485" width="124.488" height="145.559" fill="#E89B7F"/>',
-	'<rect x="193.316" y="78.5439" width="85.8544" height="75.9443" fill="#EFA78C"/>',
-	'<rect x="207.268" y="95.4209" width="17.1712" height="16.8768" fill="white"/>',
-	'<rect x="213.709" y="98.584" width="10.732" height="10.548" fill="black"/>''<rect x="223.363" y="131.282" width="25.7567" height="10.548" fill="#BB7156"/>',
-	'<rect x="248.047" y="95.4209" width="17.1712" height="16.8768" fill="white"/>',
-	'<rect x="248.047" y="98.584" width="10.732" height="10.548" fill="black"/>',
-	'<path d="M298.484 300.046H173.996V352.785H233.02V341.182H239.459V352.785H298.484V300.046Z" fill="white"/>'
-	);
+		return
+			string.concat(
+				'<rect width="42.9268" height="128.682" transform="matrix(1 0 0 -1 249.121 427.671)" fill="#EFA78C"/>',
+				'<path d="M180.438 427.671H223.364V298.989H180.438V427.671Z" fill="#EFA78C"/>',
+				'<rect width="42.9268" height="139.23" transform="matrix(1 0 0 -1 298.486 293.716)" fill="#EFA78C"/>',
+				'<rect width="42.9268" height="139.23" transform="matrix(1 0 0 -1 131.072 293.716)" fill="#EFA78C"/>',
+				'<rect x="174" y="154.485" width="124.488" height="145.559" fill="#E89B7F"/>',
+				'<rect x="193.316" y="78.5439" width="85.8544" height="75.9443" fill="#EFA78C"/>',
+				'<rect x="207.268" y="95.4209" width="17.1712" height="16.8768" fill="white"/>',
+				'<rect x="213.709" y="98.584" width="10.732" height="10.548" fill="black"/>'
+				'<rect x="223.363" y="131.282" width="25.7567" height="10.548" fill="#BB7156"/>',
+				'<rect x="248.047" y="95.4209" width="17.1712" height="16.8768" fill="white"/>',
+				'<rect x="248.047" y="98.584" width="10.732" height="10.548" fill="black"/>',
+				'<path d="M298.484 300.046H173.996V352.785H233.02V341.182H239.459V352.785H298.484V300.046Z" fill="white"/>'
+			);
 	}
 
 	function supportsInterface(

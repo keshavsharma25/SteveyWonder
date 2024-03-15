@@ -107,7 +107,14 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<svg xmlns="http://www.w3.org/2000/svg"  width="400" height="400" viewBox="0 0 400 400" fill="none">',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" width="400" height="400" fill="',
+				colors[_pantsColor[_tokenId].colorIndex],
+				'" fill-opacity="0.1"/>',
+				'<g transform="translate(-200,-400) scale(2, 2)">',
 				renderByTokenId(_tokenId),
+				"</g>",
 				"</svg>"
 			);
 	}

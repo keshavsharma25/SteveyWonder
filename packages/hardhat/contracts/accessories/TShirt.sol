@@ -114,7 +114,14 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<svg xmlns="http://www.w3.org/2000/svg"  width="400" height="400" viewBox="0 0 400 400" fill="none">',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" width="400" height="400" fill="',
+				colors[_tshirtColor[_tokenId].primaryIndex],
+				'" fill-opacity="0.1"/>',
+				'<g transform="translate(-100,-80) scale(1.5, 1.5)">',
 				renderByTokenId(_tokenId),
+				"</g>",
 				"</svg>"
 			);
 	}

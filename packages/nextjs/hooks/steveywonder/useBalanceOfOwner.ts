@@ -9,16 +9,21 @@ type Option = {
 };
 
 export const useBalanceOfOwner = ({ name, address }: Option) => {
-  const { data: addrBalance, refetch } = useScaffoldContractRead({
+  const {
+    data: addrBalance,
+    refetch,
+    status,
+  } = useScaffoldContractRead({
     contractName: name,
     functionName: "balanceOf",
     args: [address],
     watch: true,
+    cacheTime: 5_000,
   });
 
   useEffect(() => {
     refetch();
   }, [name, refetch]);
 
-  return { addrBalance };
+  return { addrBalance, status };
 };

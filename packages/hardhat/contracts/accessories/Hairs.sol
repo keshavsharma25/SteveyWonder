@@ -41,7 +41,7 @@ contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		uint256 styleIndex;
 	}
 
-	mapping(uint256 => HairType) public _hairTypeMapper;
+	mapping(uint256 => HairType) private _hairType;
 
 	constructor(
 		address _initialOwner,
@@ -80,8 +80,8 @@ contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		uint256 index1 = uint256(uint8(predictableRandom[0])) % colors.length;
 		uint256 index2 = uint256(uint8(predictableRandom[1])) % styles.length;
 
-		_hairTypeMapper[tokenId].colorIndex = index1;
-		_hairTypeMapper[tokenId].styleIndex = index2;
+		_hairType[tokenId].colorIndex = index1;
+		_hairType[tokenId].styleIndex = index2;
 	}
 
 	function _hairURI(uint256 _tokenId) internal view returns (string memory) {
@@ -98,10 +98,10 @@ contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								_generateBase64(_tokenId),
 								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
 								'"attributes": [{"trait_type": "type", "value": "hair"}, {"trait_type": "color", "value": "',
-								colors[_hairTypeMapper[_tokenId].colorIndex],
+								colors[_hairType[_tokenId].colorIndex],
 								'"}, {"trait_type": "style", "value": "',
 								Strings.toString(
-									_hairTypeMapper[_tokenId].styleIndex
+									_hairType[_tokenId].styleIndex
 								),
 								'"}]}'
 							)
@@ -126,7 +126,7 @@ contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 				'<rect id="',
 				Strings.toString(_tokenId),
 				'" width="400" height="400" fill="',
-				colors[_hairTypeMapper[_tokenId].colorIndex],
+				colors[_hairType[_tokenId].colorIndex],
 				'" fill-opacity="0.1"/>',
 				'<g transform="translate(-200,60) scale(2, 2)">',
 				renderByTokenId(_tokenId),
@@ -145,9 +145,9 @@ contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<path d="',
-				styles[_hairTypeMapper[_tokenId].styleIndex],
+				styles[_hairType[_tokenId].styleIndex],
 				'" fill="',
-				colors[_hairTypeMapper[_tokenId].colorIndex],
+				colors[_hairType[_tokenId].colorIndex],
 				'" />'
 			);
 	}

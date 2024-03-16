@@ -59,13 +59,13 @@ export const ItemContainer = ({ tokenId }: Props) => {
           );
         })}
       </div>
-      <div className="h-full w-full pt-4">
+      <div className="h-full w-full pt-8">
         {isLoading ? (
           <div className="flex justify-center items-center h-full w-full rounded-lg">
             <span className="loading loading-spinner loading-md"></span>
           </div>
         ) : addrBalance && addrBalance > 0 ? (
-          <ItemCards tba={tba} option={option} addrBalance={addrBalance} />
+          <ItemCards tba={tba} option={option} addrBalance={addrBalance} tokenId={tokenId} />
         ) : (
           <GoToAccessories />
         )}
@@ -78,13 +78,14 @@ type ItemCardsProps = {
   tba: Address | undefined;
   option: Option;
   addrBalance: bigint | undefined;
+  tokenId: number;
 };
 
-const ItemCards = ({ tba, option, addrBalance }: ItemCardsProps) => {
+const ItemCards = ({ tba, option, addrBalance, tokenId }: ItemCardsProps) => {
   return (
     <div className="flex flex-row flex-wrap gap-4">
       {Array.from({ length: Number(addrBalance) }, (_, index) => index).map(value => {
-        return <Item key={value} idx={BigInt(value)} tba={tba} option={option} />;
+        return <Item key={value} idx={BigInt(value)} tba={tba} option={option} mainTokenId={tokenId} />;
       })}
     </div>
   );

@@ -135,23 +135,25 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	function _tshirtSVG(uint256 _tokenId) public view returns (string memory) {
 		return
 			string.concat(
-				'<rect x="142" y="127.543" width="116" height="135.634" fill="',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" x="174" y="154.484" width="124.488" height="145.559" fill="',
 				colors[_tshirtColor[_tokenId].primaryIndex],
 				'"/>',
-				'<mask id="path-19-inside-1_1055_604" fill="white">',
-				'<path d="M101 127.543H142V186.515H101V127.543Z"/>',
+				'<mask id="path-129-inside-1_0_1" fill="white">',
+				'<path d="M130 154.484H174V217.771H130V154.484Z"/>',
 				"</mask>",
-				'<path d="M101 127.543H142V186.515H101V127.543Z" fill="',
+				'<path d="M130 154.484H174V217.771H130V154.484Z" fill="',
 				colors[_tshirtColor[_tokenId].secondaryIndex],
 				'"/>',
-				'<path d="M141.5 127.543V186.515H142.5V127.543H141.5Z" fill="white" fill-opacity="0.24" mask="url(#path-19-inside-1_1055_604)"/>',
-				'<mask id="path-21-inside-2_1055_604" fill="white">',
-				'<path d="M299 127.543H258V186.515H299V127.543Z"/>',
+				'<path d="M173.5 154.484V217.771H174.5V154.484H173.5Z" fill="white" fill-opacity="0.24" mask="url(#path-129-inside-1_0_1)"/>',
+				'<mask id="path-131-inside-2_0_1" fill="white">',
+				'<path d="M342.486 154.484H298.486V217.771H342.486V154.484Z"/>',
 				"</mask>",
-				'<path d="M299 127.543H258V186.515H299V127.543Z" fill="',
-				colors[_tshirtColor[_tokenId].secondaryIndex],
+				'<path d="M342.486 154.484H298.486V217.771H342.486V154.484Z" fill="',
+				colors[_tshirtColor[_tokenId].secondaryIndex],	
 				'"/>',
-				'<path d="M258.5 127.543V186.515H257.5V127.543H258.5Z" fill="white" fill-opacity="0.24" mask="url(#path-21-inside-2_1055_604)"/>'
+				'<path d="M298.986 154.484V217.771H297.986V154.484H298.986Z" fill="white" fill-opacity="0.24" mask="url(#path-131-inside-2_0_1)"/>'
 			);
 	}
 

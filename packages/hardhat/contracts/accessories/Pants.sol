@@ -128,7 +128,7 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	function _pantsSVG(uint256 _tokenId) public view returns (string memory) {
 		return
 			string.concat(
-				'<path fill-rule="evenodd" clip-rule="evenodd" d="M258.002 263.177H142.002V285.783V318.217V375.224H194.002V318.217H206.002V375.223H258.002V285.783H258.002V263.177Z" fill="',
+				'<path fill-rule="evenodd" clip-rule="evenodd" d="M298.492 300.044H174.004V324.303V359.111V420.288H229.809V359.111H242.687V420.288H298.492V324.303H298.492V300.044Z" fill="',
 				colors[_pantsColor[_tokenId].colorIndex],
 				'"/>'
 			);

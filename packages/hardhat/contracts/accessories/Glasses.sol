@@ -103,11 +103,11 @@ contract Glasses is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			string.concat(
 				'<rect id="',
 				Strings.toString(salt + _tokenId),
-				'" x="170" y="70" width="23" height="22" rx="1" fill="black" fill-opacity="0.8" stroke="black" stroke-width="2"/>',
-				'<rect x="207" y="70" width="23" height="22" rx="1" fill="black" fill-opacity="0.8" stroke="black" stroke-width="2"/>',
-				'<line x1="192" y1="81" x2="207" y2="81" stroke="black" stroke-width="2"/>',
-				'<line x1="169.629" y1="80.9285" x2="159.629" y2="76.9285" stroke="black" stroke-width="2"/>',
-				'<line y1="-1" x2="10.7703" y2="-1" transform="matrix(0.928477 -0.371391 -0.371391 -0.928477 230 80)" stroke="black" stroke-width="2"/>'
+				'" x="203.977" y="91.585" width="24.8293" height="23.7561" rx="1" fill="black" fill-opacity="0.8" stroke="black" stroke-width="2"/>',
+				'<rect x="243.684" y="91.585" width="24.8293" height="23.7561" rx="1" fill="black" fill-opacity="0.8" stroke="black" stroke-width="2"/>',
+				'<line x1="227.662" y1="103.536" x2="243.76" y2="103.536" stroke="black" stroke-width="2"/>',
+				'<line x1="203.679" y1="103.318" x2="192.948" y2="99.0254" stroke="black" stroke-width="2"/>',
+				'<line y1="-1" x2="11.5584" y2="-1" transform="matrix(0.928477 -0.371391 -0.371391 -0.928477 268.441 102.39)" stroke="black" stroke-width="2"/>'
 			);
 	}
 

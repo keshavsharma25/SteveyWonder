@@ -163,7 +163,10 @@ contract SteveyWonder is
 			if (activeAccessories[nftAccessoryAddrs[i]][_tokenId] > 0) {
 				render = string.concat(
 					render,
-					renderAccessory(nftAccessoryAddrs[i], _tokenId)
+					renderAccessory(
+						nftAccessoryAddrs[i],
+						activeAccessories[nftAccessoryAddrs[i]][_tokenId]
+					)
 				);
 			}
 		}

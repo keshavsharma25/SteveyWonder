@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Address } from "viem";
 import { Item } from "~~/components/steveywonder/item/Item";
 import { useBalanceOfOwner } from "~~/hooks/steveywonder/useBalanceOfOwner";
 import { useTokenBoundAddress } from "~~/hooks/steveywonder/useTokenBoundAddress";
@@ -15,12 +16,28 @@ export const ItemContainer = ({ tokenId }: Props) => {
   const [option, setOption] = useState<Option>("TShirt");
   const options: Option[] = ["TShirt", "Pants", "Hairs", "Shoes", "Glasses"];
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const { tba } = useTokenBoundAddress(tokenId);
 
-  const { balance } = useBalanceOfOwner({
+  const { addrBalance, status } = useBalanceOfOwner({
     address: tba,
     name: option as ContractName,
   });
+
+  useEffect(() => {
+    if (status === "loading") {
+      setIsLoading(true);
+    }
+
+    if (status === "success") {
+      setIsLoading(false);
+    }
+  }, [status]);
+
+  useEffect(() => {
+    console.log(status);
+  }, [status]);
 
   return (
     <div className="flex flex-col h-full">
@@ -42,23 +59,43 @@ export const ItemContainer = ({ tokenId }: Props) => {
           );
         })}
       </div>
-      <div className="pt-10 h-full">
-        {Number(balance) > 0 ? (
-          [...Array(Number(balance))].slice(1).map((index, key) => {
-            return (
-              <div key={key}>
-                <Item index={index} tba={tba} option={option} />
-              </div>
-            );
-          })
-        ) : (
-          <div className="flex justify-center items-center h-full w-full bg-gray-300 rounded-lg backdrop-blur-md bg-opacity-5">
-            <Link className="bg-[#3C44FF] px-6 py-4 font-medium text-xl rounded-lg" href="/accessories">
-              Go to Accessories
-            </Link>
+      <div className="h-full w-full pt-4">
+        {isLoading ? (
+          <div className="flex justify-center items-center h-full w-full rounded-lg">
+            <span className="loading loading-spinner loading-md"></span>
           </div>
+        ) : addrBalance && addrBalance > 0 ? (
+          <ItemCards tba={tba} option={option} addrBalance={addrBalance} />
+        ) : (
+          <GoToAccessories />
         )}
       </div>
+    </div>
+  );
+};
+
+type ItemCardsProps = {
+  tba: Address | undefined;
+  option: Option;
+  addrBalance: bigint | undefined;
+};
+
+const ItemCards = ({ tba, option, addrBalance }: ItemCardsProps) => {
+  return (
+    <div className="flex flex-row flex-wrap gap-4">
+      {Array.from({ length: Number(addrBalance) }, (_, index) => index).map(value => {
+        return <Item key={value} idx={BigInt(value)} tba={tba} option={option} />;
+      })}
+    </div>
+  );
+};
+
+const GoToAccessories = () => {
+  return (
+    <div className="flex justify-center items-center h-full w-full bg-gray-300 rounded-lg backdrop-blur-md bg-opacity-5">
+      <Link className="bg-[#3C44FF] px-6 py-4 font-medium text-xl rounded-lg" href="/accessories">
+        Go to Accessories
+      </Link>
     </div>
   );
 };

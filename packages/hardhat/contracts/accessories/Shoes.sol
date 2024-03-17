@@ -109,10 +109,8 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 				'<svg xmlns="http://www.w3.org/2000/svg"  width="400" height="400" viewBox="0 0 400 400" fill="none">',
 				'<rect id="',
 				Strings.toString(_tokenId),
-				'" width="400" height="400" fill="',
-				_colors[uint256(_shoes[_tokenId].top)],
-				'" fill-opacity="0.1"/>',
-				'<g transform="translate(-200,-500) scale(2, 2)">',
+				'" width="400" height="400" fill="black" fill-opacity="0.05"/>',
+				'<g transform="translate(-272.5,-650) scale(2, 2)">',
 				renderByTokenId(_tokenId),
 				"</g>",
 				"</svg>"

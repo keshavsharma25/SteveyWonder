@@ -68,8 +68,8 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 index1 = uint256(uint8(predictableRandom[0])) % 5;
-		uint256 index2 = uint256(uint8(predictableRandom[1])) % 5;
+		uint256 index1 = uint256(uint8(predictableRandom[0])) % colors.length;
+		uint256 index2 = uint256(uint8(predictableRandom[1])) % colors.length;
 
 		_tshirtColor[tokenId].primaryIndex = index1;
 		_tshirtColor[tokenId].secondaryIndex = index2;
@@ -149,7 +149,7 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 				'<path d="M342.486 154.484H298.486V217.771H342.486V154.484Z"/>',
 				"</mask>",
 				'<path d="M342.486 154.484H298.486V217.771H342.486V154.484Z" fill="',
-				colors[_tshirtColor[_tokenId].secondaryIndex],	
+				colors[_tshirtColor[_tokenId].secondaryIndex],
 				'"/>',
 				'<path d="M298.986 154.484V217.771H297.986V154.484H298.986Z" fill="white" fill-opacity="0.24" mask="url(#path-131-inside-2_0_1)"/>'
 			);

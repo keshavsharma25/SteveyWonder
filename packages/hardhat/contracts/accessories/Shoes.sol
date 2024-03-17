@@ -62,8 +62,8 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 top = uint256(uint8(predictableRandom[0])) % 3;
-		uint256 bottom = uint256(uint8(predictableRandom[1])) % 3;
+		uint256 top = uint256(uint8(predictableRandom[0])) % _colors.length;
+		uint256 bottom = uint256(uint8(predictableRandom[1])) % _colors.length;
 
 		uint256 i = 2;
 

@@ -14,7 +14,7 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[5] private colors = [
+	string[5] private _colors = [
 		"#F1EBD4",
 		"#252532",
 		"#141415",
@@ -69,7 +69,7 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 
 		_pantsColor[tokenId].colorIndex =
 			uint256(uint8(predictableRandom[0])) %
-			5;
+			_colors.length;
 	}
 
 	function _pantsURI(uint256 _tokenId) internal view returns (string memory) {
@@ -86,7 +86,7 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								_generateBase64(_tokenId),
 								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
 								'"attributes": [{"trait_type": "type", "value": "half-Pants"}, {"trait_type": "color", "value": "',
-								colors[_pantsColor[_tokenId].colorIndex],
+								_colors[_pantsColor[_tokenId].colorIndex],
 								'"}]}'
 							)
 						)
@@ -127,7 +127,7 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<path fill-rule="evenodd" clip-rule="evenodd" d="M298.492 300.044H174.004V324.303V359.111V420.288H229.809V359.111H242.687V420.288H298.492V324.303H298.492V300.044Z" fill="',
-				colors[_pantsColor[_tokenId].colorIndex],
+				_colors[_pantsColor[_tokenId].colorIndex],
 				'"/>'
 			);
 	}

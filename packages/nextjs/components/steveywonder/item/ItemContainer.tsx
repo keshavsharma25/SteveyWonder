@@ -41,7 +41,7 @@ export const ItemContainer = ({ tokenId }: Props) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className={"flex flex-row gap-8 items-end w-max h-11 px-2"}>
+      <div className={"flex flex-row gap-8 items-end w-max h-11 px-2 mb-8"}>
         {options.map((item, key) => {
           return (
             <div
@@ -59,7 +59,7 @@ export const ItemContainer = ({ tokenId }: Props) => {
           );
         })}
       </div>
-      <div className="h-full w-full pt-8">
+      <div className="h-full w-full overflow-y-scroll">
         {isLoading ? (
           <div className="flex justify-center items-center h-full w-full rounded-lg">
             <span className="loading loading-spinner loading-md"></span>

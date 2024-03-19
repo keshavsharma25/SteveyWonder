@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.20;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -14,7 +14,7 @@ import { IERC721Custom } from "./interfaces/IERC721Custom.sol";
 import { Background } from "./helpers/Background.sol";
 
 /**
- * @title SteveyWonder
+ * @title SteveyWonder Contract
  * @author Keshav
  * @notice A simple ERC721 contract that mints Stevey NFTs that are converted to
  * ERC6551 tokens.
@@ -53,10 +53,17 @@ contract SteveyWonder is
 	}
 
 	/* -------------------------------- Functions ------------------------------- */
+
+	/**
+	 * @dev Mints a Stevey NFT and returns the Token Bound Address for the NFT.
+	 *
+	 * @return The Token Bound Address for the NFT.
+	 */
 	function safeMint() public payable returns (address) {
 		uint256 tokenId = _nextTokenId++;
 		_safeMint(msg.sender, tokenId);
 
+		// computes Token Bound Address for the Stevey Wonder NFT
 		address tba = IERC6551Registry(_erc6551Registry).createAccount(
 			_accImplementation,
 			bytes32(0),
@@ -68,6 +75,11 @@ contract SteveyWonder is
 		return tba;
 	}
 
+	/**
+	 * @dev Returns contract-level metadata.
+	 * @notice Used by NFT marketplaces to display collection info.
+	 * @return Base64-encoded JSON string with metadata.
+	 */
 	function contractURI() public pure returns (string memory) {
 		string memory json = string.concat(
 			'{"name": "SteveyWonder", "description": "This is a collection of SteveyWonder NFTs.", "image": "',
@@ -85,6 +97,15 @@ contract SteveyWonder is
 			);
 	}
 
+	/**
+	 * @dev Returns the metadata URI for a specific token.
+	 *
+	 * @notice Retrieves the unique metadata associated with a given token within the NFT collection.
+	 *
+	 * @param tokenId The ID of the token to query.
+	 *
+	 * @return A string representing the metadata URI.
+	 */
 	function tokenURI(
 		uint256 tokenId
 	) public view override returns (string memory) {
@@ -92,6 +113,12 @@ contract SteveyWonder is
 		return _steveyWonderTokenURI(tokenId);
 	}
 
+	/**
+	 * @notice Generates Base64-encoded metadata for a token.
+	 * @dev Internal function to construct token-specific JSON metadata.
+	 * @param tokenId The ID of the token.
+	 * @return Base64-encoded JSON string with token metadata.
+	 */
 	function _steveyWonderTokenURI(
 		uint256 tokenId
 	) internal view returns (string memory) {
@@ -115,12 +142,26 @@ contract SteveyWonder is
 			);
 	}
 
+	/**
+	 * @dev internal function that encodes and generates encoded Base64 string of a SVG for a certain token.
+	 *
+	 * @param _tokenId The ID of the token.
+	 *
+	 * @return Base64-encoded string of the SVG.
+	 */
 	function _generateBase64(
 		uint256 _tokenId
 	) internal view returns (string memory) {
 		return Base64.encode(bytes(generateSVGwithBackground(_tokenId)));
 	}
 
+	/**
+	 * @dev public function that adds a background to the SVG Character.
+	 *
+	 * @param _tokenId The ID of the token.
+	 *
+	 * @return SVG string with background.
+	 */
 	function generateSVGwithBackground(
 		uint256 _tokenId
 	) public view returns (string memory) {
@@ -132,6 +173,13 @@ contract SteveyWonder is
 			);
 	}
 
+	/**
+	 * @dev public function that returns the Character SVG without any background.
+	 *
+	 * @param _tokenId The ID of the token.
+	 *
+	 * @return SVG string without background.
+	 */
 	function generateSVGwithoutBackground(
 		uint256 _tokenId
 	) public view returns (string memory) {
@@ -143,6 +191,12 @@ contract SteveyWonder is
 			);
 	}
 
+	/**
+	 * @dev internal function that adds a background to the SVG character.
+	 * @notice adds a background to the SVG Character.
+	 * @param _tokenId The ID of the token.
+	 * @return SVG string with background.
+	 */
 	function _addBackground(
 		uint256 _tokenId
 	) internal view returns (string memory) {
@@ -154,6 +208,12 @@ contract SteveyWonder is
 			);
 	}
 
+	/**
+	 * @dev public function that returns the rendered SVG character with accessories.
+	 * @notice returns the rendered SVG character with accessories.
+	 * @param _tokenId The ID of the token.
+	 * @return SVG string with rendered accessories and character.
+	 */
 	function renderByTokenId(
 		uint256 _tokenId
 	) public view returns (string memory) {
@@ -174,6 +234,14 @@ contract SteveyWonder is
 		return render;
 	}
 
+	/**
+	 * @dev internal function that returns the svg string of a given accessory from a IERC721Custom Interface.
+	 *
+	 * @param _tokenId: The ID of the token.
+	 * @param nftAccessory: The address of the accessory.
+	 *
+	 * @return SVG string of the accessory.
+	 */
 	function renderAccessory(
 		address nftAccessory,
 		uint256 _tokenId
@@ -181,6 +249,11 @@ contract SteveyWonder is
 		return IERC721Custom(nftAccessory).renderByTokenId(_tokenId);
 	}
 
+	/**
+	 * @dev internal function that returns the svg string of main stevey wonder character
+	 *
+	 * @return SVG string of the main stevey wonder character.
+	 */
 	function SteveyWonderSvg() internal pure returns (string memory) {
 		return
 			string.concat(
@@ -199,12 +272,26 @@ contract SteveyWonder is
 			);
 	}
 
+	/**
+	 * @notice Used to check if a contract adheres to certain standards (e.g., ERC165, ERC721, ERC721Enumerable).
+	 *
+	 * @param interfaceId The 4-byte interface ID to query.
+	 *
+	 * @return True if the interface is supported, false otherwise.
+	 */
 	function supportsInterface(
 		bytes4 interfaceId
 	) public view override(IERC165, ERC721, ERC721Enumerable) returns (bool) {
 		return super.supportsInterface(interfaceId);
 	}
 
+	/**
+	 * @notice Allows the contract owner to register addresses of compatible NFT accessory contracts.
+	 *
+	 * @dev Prevents duplicate addresses and maintains a record of valid accessory contracts.
+	 *
+	 * @param _nftAccessory The address of the NFT accessory contract to add.
+	 */
 	function addNftAccessoryAddr(address _nftAccessory) public onlyOwner {
 		if (!hasNftAccessoryAddrs[_nftAccessory]) {
 			nftAccessoryAddrs.push(_nftAccessory);
@@ -212,6 +299,9 @@ contract SteveyWonder is
 		}
 	}
 
+	/**
+	 * @notice allows the NFT owner to set active accessories for a token.
+	 */
 	function setActiveAccessories(
 		address _nftAccessory,
 		uint256 _SteveyWondertokenId,
@@ -239,6 +329,11 @@ contract SteveyWonder is
 		] = _accessoryTokenId;
 	}
 
+	/**
+	 * @notice allows the accessory contract to update active accessories for a token if the active accessory is transferred.
+	 *
+	 * @dev This function is only callable by the NFT Accessory contracts.
+	 */
 	function setActiveAccessoriesOnUpdate(
 		address _nftAccessory,
 		uint256 _SteveyWondertokenId,
@@ -259,6 +354,14 @@ contract SteveyWonder is
 		] = _accessoryTokenId;
 	}
 
+	/**
+	 * @dev get the active accessory for a token.
+	 *
+	 * @param _nftAccessory The address of the NFT accessory contract.
+	 * @param _SteveyWondertokenId The ID of the token.
+	 *
+	 * @return The ID of the active accessory.
+	 */
 	function getActiveAccessory(
 		address _nftAccessory,
 		uint256 _SteveyWondertokenId
@@ -268,6 +371,24 @@ contract SteveyWonder is
 			"invalid NFT Accessory address"
 		);
 		return activeAccessories[_nftAccessory][_SteveyWondertokenId];
+	}
+
+	/**
+	 * @dev get the address of the Token Bound Account for a token.
+	 *
+	 * @param tokenId The ID of the token.
+	 *
+	 * @return The address of the Token Bound Account.
+	 */
+	function getTBAAddress(uint256 tokenId) public view returns (address) {
+		return
+			IERC6551Registry(_erc6551Registry).account(
+				_accImplementation,
+				salt,
+				block.chainid,
+				address(this),
+				tokenId
+			);
 	}
 
 	function _update(
@@ -285,17 +406,6 @@ contract SteveyWonder is
 		super._increaseBalance(account, value);
 	}
 
-	function getTBAAddress(uint256 tokenId) public view returns (address) {
-		return
-			IERC6551Registry(_erc6551Registry).account(
-				_accImplementation,
-				salt,
-				block.chainid,
-				address(this),
-				tokenId
-			);
-	}
-
-	/* --------------------------------- receive -------------------------------- */
+	/* ------------------------------- recieve ------------------------------ */
 	receive() external payable {}
 }

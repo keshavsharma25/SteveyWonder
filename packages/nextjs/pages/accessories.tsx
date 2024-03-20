@@ -96,7 +96,7 @@ const Accessories: NextPage = () => {
         {accessories.map(({ title, imagePath }) => (
           <div key={title} className="py-4 px-2 rounded-xl bg-[#161829] border border-gray-100 border-opacity-5">
             <div className="flex justify-center">
-              <Image src={`/images/accessories/${imagePath}`} alt={title} width={300} height={300} />
+              <Image src={`/images/accessories/${imagePath.toString()}`} alt={title} width={300} height={300} />
             </div>
             <div className="flex flex-col gap-1 mb-2">
               <div className="text-2xl font-medium mx-6 mt-4">{title}</div>

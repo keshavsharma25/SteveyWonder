@@ -14,6 +14,19 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract Glasses is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
+	string[10] private _colors = [
+		"#FFFFFF",
+		"#000000",
+		"#D22121",
+		"#48970A",
+		"#017754",
+		"#4231D4",
+		"#CB04AC",
+		"#8608D3",
+		"#C45403",
+		"#CE8800"
+	];
+	mapping(uint256 => uint256) private _glasses;
 
 	address private _steveyWonderAddr;
 	address private _erc6551RegistryAddr;
@@ -43,6 +56,23 @@ contract Glasses is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		);
 
 		_safeMint(to, tokenId);
+
+		bytes32 predictableRandom = keccak256(
+			abi.encodePacked(
+				tokenId,
+				blockhash(block.number - 1),
+				block.timestamp,
+				msg.sender,
+				address(this)
+			)
+		);
+
+		uint256 index = uint256(predictableRandom) % 11;
+
+		uint256 colorIndex = uint256(uint8(predictableRandom[index])) %
+			_colors.length;
+
+		_glasses[tokenId] = colorIndex;
 	}
 
 	function _GlassesURI(
@@ -103,11 +133,25 @@ contract Glasses is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			string.concat(
 				'<rect id="',
 				Strings.toString(salt + _tokenId),
-				'" x="203.977" y="91.585" width="24.8293" height="23.7561" rx="1" fill="black" fill-opacity="0.8" stroke="black" stroke-width="2"/>',
-				'<rect x="243.684" y="91.585" width="24.8293" height="23.7561" rx="1" fill="black" fill-opacity="0.8" stroke="black" stroke-width="2"/>',
-				'<line x1="227.662" y1="103.536" x2="243.76" y2="103.536" stroke="black" stroke-width="2"/>',
-				'<line x1="203.679" y1="103.318" x2="192.948" y2="99.0254" stroke="black" stroke-width="2"/>',
-				'<line y1="-1" x2="11.5584" y2="-1" transform="matrix(0.928477 -0.371391 -0.371391 -0.928477 268.441 102.39)" stroke="black" stroke-width="2"/>'
+				'" x="203.977" y="91.585" width="24.8293" height="23.7561" rx="1" fill="',
+				_colors[_glasses[_tokenId]],
+				'" fill-opacity="0.8" stroke="',
+				_colors[_glasses[_tokenId]],
+				'" stroke-width="2"/>',
+				'<rect x="243.684" y="91.585" width="24.8293" height="23.7561" rx="1" fill="',
+				_colors[_glasses[_tokenId]],
+				'" fill-opacity="0.8" stroke="',
+				_colors[_glasses[_tokenId]],	
+				'" stroke-width="2"/>',
+				'<line x1="227.662" y1="103.536" x2="243.76" y2="103.536" stroke="',
+				_colors[_glasses[_tokenId]],
+				'" stroke-width="2"/>',
+				'<line x1="203.679" y1="103.318" x2="192.948" y2="99.0254" stroke="',
+				_colors[_glasses[_tokenId]],
+				'" stroke-width="2"/>',
+				'<line y1="-1" x2="11.5584" y2="-1" transform="matrix(0.928477 -0.371391 -0.371391 -0.928477 268.441 102.39)" stroke="',
+				_colors[_glasses[_tokenId]],
+				'" stroke-width="2"/>'
 			);
 	}
 

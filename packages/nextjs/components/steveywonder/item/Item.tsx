@@ -62,7 +62,7 @@ export const Item = ({ idx, option, tba, mainTokenId }: Props) => {
     >
       <div className="overflow-hidden rounded h-full w-full">
         {isLoading ? (
-          <div className="bg-[#1D1E35] animate-pulse h-full w-full"></div>
+          <div className="bg-base-200 animate-pulse h-full w-full"></div>
         ) : (
           <Image src={`data:image/svg+xml;base64,${tokenURI}`} alt={`${Number(tokenId)}`} width={420} height={420} />
         )}

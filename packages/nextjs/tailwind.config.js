@@ -40,18 +40,18 @@ module.exports = {
       },
       {
         scaffoldEthDark: {
-          primary: "#0D0E18",
-          "primary-content": "#F9FBFF",
-          secondary: "#121321",
+          primary: "#FFFFF", // footer buttons
+          "primary-content": "#F9FBFF", // footer buttons
+          secondary: "#2F3156", // shadow and on hover
           "secondary-content": "#F9FBFF",
-          accent: "#4969A6",
+          accent: "#cfd0d3", // placeholders in debug contracts
           "accent-content": "#F9FBFF",
-          neutral: "#F9FBFF",
+          neutral: "#E0E1E5", // on click and debug contracts last
           "neutral-content": "#385183",
-          "base-100": "#121321",
-          "base-200": "#0D0E18",
-          "base-300": "#212638",
-          "base-content": "#F9FBFF",
+          "base-100": "#161728", // navbar
+          "base-200": "#0D0E18", // background
+          "base-300": "#131424", // debugContracts
+          "base-content": "#F9FBFF", // all text contents
           info: "#385183",
           success: "#34EEB6",
           warning: "#FFCF72",

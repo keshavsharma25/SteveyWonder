@@ -17,8 +17,8 @@ const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
-      <div className="flex flex-1 justify-center items-center gap-32">
-        <div className="">
+      <div className="flex flex-col justify-center items-center md:flex-1 md:flex-row md:gap-18 lg:gap-24 xl:gap-32">
+        <div className="p-4 w-[15rem] md:w-[20rem] lg:w-[30rem]">
           <Image
             src="/images/wonder.png"
             width={500}
@@ -32,8 +32,8 @@ const Home: NextPage = () => {
             quality={100}
           />
         </div>
-        <div className="flex flex-col gap-4">
-          <div className="text-6xl leading-[4.375rem] font-medium">
+        <div className="flex flex-col gap-4 p-4">
+          <div className="md:text-3xl lg:text-6xl leading-[4.375rem] font-medium">
             <h1>Design your very own</h1>
             <h1
               className={cn(
@@ -45,13 +45,13 @@ const Home: NextPage = () => {
               Stevey Wonder
             </h1>
           </div>
-          <div className="flex flex-col text-[#AEC1E0] font-normal text-2xl">
+          <div className="flex flex-col text-[#AEC1E0] font-normal lg:text-2xl">
             <span>Sed ut perspiciatis unde omnis iste natus error</span>
             <span>sit voluptatem accusantium doloremque laudantium, to</span>
           </div>
           <Link
             href="/steveywonder"
-            className="px-4 py-6 rounded-lg cursor-pointer bg-[#3C44FF] font-medium text-xl text-white max-w-fit my-4"
+            className="px-2 py-3 lg:px-4 lg:py-6 rounded-lg cursor-pointer bg-[#4349E2] font-medium lg:text-xl text-white max-w-fit my-4"
           >
             Mint Stevey Wonder
           </Link>

@@ -16,7 +16,8 @@ export const ItemContainer = ({ tokenId }: Props) => {
   const [option, setOption] = useState<Option>("TShirt");
   const options: Option[] = ["TShirt", "Pants", "Hairs", "Shoes", "Glasses"];
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAccessory, setIsAccessory] = useState<boolean>(false);
 
   const { tba } = useTokenBoundAddress(tokenId);
 
@@ -34,6 +35,12 @@ export const ItemContainer = ({ tokenId }: Props) => {
       setIsLoading(false);
     }
   }, [status]);
+
+  useEffect(() => {
+    if (!isLoading && addrBalance && Number(addrBalance) > 0) {
+      setIsAccessory(true);
+    }
+  }, [addrBalance, isLoading]);
 
   useEffect(() => {
     console.log(status);
@@ -59,12 +66,12 @@ export const ItemContainer = ({ tokenId }: Props) => {
           );
         })}
       </div>
-      <div className="h-full w-full overflow-y-scroll">
+      <div className={cn("h-full w-full", isAccessory && "overflow-y-auto")}>
         {isLoading ? (
           <div className="flex justify-center items-center h-full w-full rounded-lg">
             <span className="loading loading-spinner loading-md"></span>
           </div>
-        ) : addrBalance && addrBalance > 0 ? (
+        ) : addrBalance && Number(addrBalance) > 0 ? (
           <ItemCards tba={tba} option={option} addrBalance={addrBalance} tokenId={tokenId} />
         ) : (
           <GoToAccessories />
@@ -94,7 +101,7 @@ const ItemCards = ({ tba, option, addrBalance, tokenId }: ItemCardsProps) => {
 const GoToAccessories = () => {
   return (
     <div className="flex justify-center items-center h-full w-full bg-gray-300 rounded-lg backdrop-blur-md bg-opacity-5">
-      <Link className="bg-[#3C44FF] px-6 py-4 font-medium text-xl rounded-lg" href="/accessories">
+      <Link className="bg-secondary px-6 py-4 font-medium text-xl rounded-lg" href="/accessories">
         Go to Accessories
       </Link>
     </div>

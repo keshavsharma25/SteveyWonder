@@ -44,7 +44,7 @@ const SteveyWonderNFTs = ({ balanceOfStevey }: SteveyWonderNFTsProps) => {
   return (
     <div className="flex flex-col my-6 p-2 gap-y-8">
       <div className="flex flex-row flex-1 justify-between items-center px-10 py-2 md:px-20 lg:px-30">
-        <span className="text-2xl font-medium">Your SteveyWonder NFTs</span>
+        <span className="text-3xl font-bold">Stevey Wonders&apos;</span>
         <MintStevey name="Mint" className="text-lg py-2" />
       </div>
       <div className="px-14 space-y-5 md:grid md:space-y-0 md:grid-cols-2 md:px-24 md:gap-10 lg:grid-cols-3 lg:px-36 xl:grid-cols-4">

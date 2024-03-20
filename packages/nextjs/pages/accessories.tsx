@@ -135,7 +135,7 @@ const Accessories: NextPage = () => {
                     <MintAccs contractName={title} name="Mint" key={title} tokenId={accTokenOption[title]} />
                   ) : (
                     <button
-                      className="flex items-center text-xl bg-[#3C44FF] hover:bg-[#3036cc] text-white font-medium py-2 px-4 rounded"
+                      className="flex items-center text-xl bg-secondary hover:bg-secondary-focus text-white font-medium py-2 px-4 rounded"
                       onClick={() => {
                         toast("You need to mint a Stevey first!", {
                           icon: "🦊",

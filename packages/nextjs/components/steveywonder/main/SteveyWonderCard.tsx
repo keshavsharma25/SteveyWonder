@@ -23,12 +23,15 @@ export const SteveyWonderCard = ({ idx, className }: Props) => {
 
   return (
     <div
-      className={cn("p-4 rounded-xl bg-[#161829] border border-gray-100 border-opacity-5 cursor-pointer", className)}
+      className={cn(
+        "p-4 rounded-xl bg-[#161829] border border-gray-100 border-opacity-5 cursor-pointer w-full h-fit",
+        className,
+      )}
       onClick={() => {
         push(`/steveywonder/${Number(tokenId)}`);
       }}
     >
-      <div className="flex items-center justify-center bg-primary rounded-xl overflow-hidden">
+      <div className="flex items-center justify-center bg-base-100 rounded-xl overflow-hidden w-full h-full">
         <ShowTokenURI contractName="SteveyWonder" tokenId={tokenId as bigint} width={420} height={420} />
       </div>
       <div className="flex flex-row justify-between px-6 pt-4 text-xl font-medium">

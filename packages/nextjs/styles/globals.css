@@ -54,16 +54,16 @@ p {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: #0d0e18;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
+  background-color: gray;
   border: 6px solid transparent;
   border-radius: 20px;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+  background-color: white;
 }

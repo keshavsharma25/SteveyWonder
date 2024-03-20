@@ -33,7 +33,7 @@ export const MintAccs = ({ name, contractName, tokenId }: Props) => {
         write?.();
       }}
       className={cn(
-        "flex items-center text-xl bg-[#3C44FF] hover:bg-[#3036cc] text-white font-medium py-2 px-4 rounded",
+        "flex items-center text-xl bg-secondary hover:bg-secondary-focus text-white font-medium py-2 px-4 rounded",
       )}
     >
       {isLoading ? <span className="loading loading-spinner loading-md"></span> : <>{name}</>}

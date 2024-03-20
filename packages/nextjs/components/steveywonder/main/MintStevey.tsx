@@ -29,7 +29,7 @@ export const MintStevey = ({ name, className }: Props) => {
     <button
       onClick={handleMintButton}
       disabled={isLoading}
-      className={cn("px-4 py-4 rounded-lg cursor-pointer bg-[#3C44FF] font-medium", className)}
+      className={cn("px-4 py-4 rounded-lg cursor-pointer bg-secondary hover:bg-secondary-focus font-medium", className)}
     >
       {isLoading ? <span className="loading loading-spinner loading-sm"></span> : name}
     </button>

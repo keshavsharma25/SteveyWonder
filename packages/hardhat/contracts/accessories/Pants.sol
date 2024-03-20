@@ -14,12 +14,17 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[5] private _colors = [
-		"#F1EBD4",
-		"#252532",
+	string[10] private _colors = [
+		"#DBD7D6",
 		"#141415",
+		"#404055",
+		"#EFE7C9",
+		"#DEB7E4",
+		"#84483B",
+		"#3B847F",
+		"#3B5C84",
 		"#4F3EE0",
-		"#84483B"
+		"#493B84"
 	];
 
 	address private _steveyWonderAddr;
@@ -67,8 +72,10 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
+		uint256 index = uint256(predictableRandom) % 13;
+
 		_pantsColor[tokenId].colorIndex =
-			uint256(uint8(predictableRandom[0])) %
+			uint256(uint8(predictableRandom[index])) %
 			_colors.length;
 	}
 

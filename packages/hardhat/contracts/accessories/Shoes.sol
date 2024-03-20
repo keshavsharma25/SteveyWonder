@@ -26,7 +26,18 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	}
 
 	mapping(uint256 => Shoe) private _shoes;
-	string[3] private _colors = ["#000000", "#FFFFFF", "#C6444C"];
+	string[10] private _colors = [
+		"#000000",
+		"#FFFFFF",
+		"#C6444C",
+		"#C1582A",
+		"#D77808",
+		"#C03388",
+		"#257671",
+		"#3A8B9D",
+		"#2A82C1",
+		"#3D4FF2"
+	];
 
 	constructor(
 		address _initialOwner,
@@ -62,8 +73,13 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 top = uint256(uint8(predictableRandom[0])) % _colors.length;
-		uint256 bottom = uint256(uint8(predictableRandom[1])) % _colors.length;
+		uint256 indexTop = uint256(predictableRandom) % 17;
+		uint256 indexBottom = uint256(predictableRandom) % 23;
+
+		uint256 top = uint256(uint8(predictableRandom[indexTop])) %
+			_colors.length;
+		uint256 bottom = uint256(uint8(predictableRandom[indexBottom])) %
+			_colors.length;
 
 		uint256 i = 2;
 

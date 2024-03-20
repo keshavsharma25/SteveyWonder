@@ -14,12 +14,17 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[5] private colors = [
-		"#D07C4C",
-		"#4C69D0",
-		"#2D8D88",
+	string[10] private colors = [
+		"#FFFFFF",
+		"#000000",
+		"#5E5D7F",
 		"#8D2D44",
-		"#8D2D44"
+		"#AE4E4E",
+		"#D07C4C",
+		"#548F27",
+		"#1D5D59",
+		"#4C69D0",
+		"#663DBC"
 	];
 
 	address private _steveyWonderAddr;
@@ -68,11 +73,14 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 index1 = uint256(uint8(predictableRandom[0])) % colors.length;
-		uint256 index2 = uint256(uint8(predictableRandom[1])) % colors.length;
+		uint256 index1 = uint256(predictableRandom) % 17;
+		uint256 index2 = uint256(predictableRandom) % 23;
 
-		_tshirtColor[tokenId].primaryIndex = index1;
-		_tshirtColor[tokenId].secondaryIndex = index2;
+		uint256 primary = uint256(uint8(predictableRandom[index1])) % colors.length;
+		uint256 secondary = uint256(uint8(predictableRandom[index2])) % colors.length;
+
+		_tshirtColor[tokenId].primaryIndex = primary;
+		_tshirtColor[tokenId].secondaryIndex = secondary;
 	}
 
 	function _tshirtURI(

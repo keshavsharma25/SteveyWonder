@@ -14,13 +14,17 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[6] private colors = [
+	string[10] private colors = [
 		"#FFFFFF",
 		"#000000",
-		"#C6444C",
-		"#F6C745",
+		"#686A7D",
+		"#C00909",
+		"#F728B1",
+		"#08956B",
 		"#5C4BF0",
-		"#F04BC2"
+		"#0968C0",
+		"#F6C745",
+		"#B06D08"
 	];
 
 	string[5] private styles = [
@@ -77,11 +81,14 @@ contract Hairs is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 index1 = uint256(uint8(predictableRandom[0])) % colors.length;
-		uint256 index2 = uint256(uint8(predictableRandom[1])) % styles.length;
+		uint256 index1 = uint256(predictableRandom) % 17;
+		uint256 index2 = uint256(predictableRandom) % 23;
 
-		_hairType[tokenId].colorIndex = index1;
-		_hairType[tokenId].styleIndex = index2;
+		uint256 color = uint256(uint8(predictableRandom[index1])) % colors.length;
+		uint256 style = uint256(uint8(predictableRandom[index2])) % styles.length;
+
+		_hairType[tokenId].colorIndex = color;
+		_hairType[tokenId].styleIndex = style;
 	}
 
 	function _hairURI(uint256 _tokenId) internal view returns (string memory) {

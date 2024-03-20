@@ -27,7 +27,14 @@ export const ShowTokenURI = ({ contractName, tokenId, width, height }: Props) =>
   }, [tokenURI]);
 
   return isLoading ? (
-    <div className="bg-[#161728] animate-pulse w-[21.25rem] h-[21.25rem]"></div>
+    <div className="bg-base-200 animate-pulse">
+      <Image
+        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NzIiIGhlaWdodD0iNDcyIiB2aWV3Qm94PSIwIDAgNDcyIDQ3MiIgZmlsbD0ibm9uZSI+Cjwvc3ZnPg=="
+        alt="loading"
+        width={width}
+        height={height}
+      />
+    </div>
   ) : (
     <Image src={`data:image/svg+xml;base64,${tokenURI}`} alt="SteveyWonder Token" width={width} height={height} />
   );

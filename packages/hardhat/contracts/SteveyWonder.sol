@@ -98,6 +98,17 @@ contract SteveyWonder is
 	}
 
 	/**
+	 * @notice Returns if token id is valid.
+	 *
+	 * @param tokenId The ID of the token to query.
+	 *
+	 * @return True if the token exists, false if it does not.
+	 */
+	function isTokenValid(uint256 tokenId) public view returns (bool) {
+		return tokenId < _nextTokenId;
+	}
+
+	/**
 	 * @dev Returns the metadata URI for a specific token.
 	 *
 	 * @notice Retrieves the unique metadata associated with a given token within the NFT collection.

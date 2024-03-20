@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.20;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { ERC721Burnable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
@@ -14,12 +14,17 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[5] private colors = [
-		"#D07C4C",
-		"#4C69D0",
-		"#2D8D88",
+	string[10] private colors = [
+		"#FFFFFF",
+		"#000000",
+		"#5E5D7F",
 		"#8D2D44",
-		"#8D2D44"
+		"#AE4E4E",
+		"#D07C4C",
+		"#548F27",
+		"#1D5D59",
+		"#4C69D0",
+		"#663DBC"
 	];
 
 	address private _steveyWonderAddr;
@@ -68,11 +73,14 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
-		uint256 index1 = uint256(uint8(predictableRandom[0])) % 5;
-		uint256 index2 = uint256(uint8(predictableRandom[1])) % 5;
+		uint256 index1 = uint256(predictableRandom) % 17;
+		uint256 index2 = uint256(predictableRandom) % 23;
 
-		_tshirtColor[tokenId].primaryIndex = index1;
-		_tshirtColor[tokenId].secondaryIndex = index2;
+		uint256 primary = uint256(uint8(predictableRandom[index1])) % colors.length;
+		uint256 secondary = uint256(uint8(predictableRandom[index2])) % colors.length;
+
+		_tshirtColor[tokenId].primaryIndex = primary;
+		_tshirtColor[tokenId].secondaryIndex = secondary;
 	}
 
 	function _tshirtURI(
@@ -114,7 +122,12 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<svg xmlns="http://www.w3.org/2000/svg"  width="400" height="400" viewBox="0 0 400 400" fill="none">',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" width="400" height="400" fill="black" fill-opacity="0.05"/>',
+				'<g transform="translate(-154.5,-140) scale(1.5, 1.5)">',
 				renderByTokenId(_tokenId),
+				"</g>",
 				"</svg>"
 			);
 	}
@@ -128,23 +141,25 @@ contract TShirt is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	function _tshirtSVG(uint256 _tokenId) public view returns (string memory) {
 		return
 			string.concat(
-				'<rect x="142" y="127.543" width="116" height="135.634" fill="',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" x="174" y="154.484" width="124.488" height="145.559" fill="',
 				colors[_tshirtColor[_tokenId].primaryIndex],
 				'"/>',
-				'<mask id="path-19-inside-1_1055_604" fill="white">',
-				'<path d="M101 127.543H142V186.515H101V127.543Z"/>',
+				'<mask id="path-129-inside-1_0_1" fill="white">',
+				'<path d="M130 154.484H174V217.771H130V154.484Z"/>',
 				"</mask>",
-				'<path d="M101 127.543H142V186.515H101V127.543Z" fill="',
+				'<path d="M130 154.484H174V217.771H130V154.484Z" fill="',
 				colors[_tshirtColor[_tokenId].secondaryIndex],
 				'"/>',
-				'<path d="M141.5 127.543V186.515H142.5V127.543H141.5Z" fill="white" fill-opacity="0.24" mask="url(#path-19-inside-1_1055_604)"/>',
-				'<mask id="path-21-inside-2_1055_604" fill="white">',
-				'<path d="M299 127.543H258V186.515H299V127.543Z"/>',
+				'<path d="M173.5 154.484V217.771H174.5V154.484H173.5Z" fill="white" fill-opacity="0.24" mask="url(#path-129-inside-1_0_1)"/>',
+				'<mask id="path-131-inside-2_0_1" fill="white">',
+				'<path d="M342.486 154.484H298.486V217.771H342.486V154.484Z"/>',
 				"</mask>",
-				'<path d="M299 127.543H258V186.515H299V127.543Z" fill="',
+				'<path d="M342.486 154.484H298.486V217.771H342.486V154.484Z" fill="',
 				colors[_tshirtColor[_tokenId].secondaryIndex],
 				'"/>',
-				'<path d="M258.5 127.543V186.515H257.5V127.543H258.5Z" fill="white" fill-opacity="0.24" mask="url(#path-21-inside-2_1055_604)"/>'
+				'<path d="M298.986 154.484V217.771H297.986V154.484H298.986Z" fill="white" fill-opacity="0.24" mask="url(#path-131-inside-2_0_1)"/>'
 			);
 	}
 

@@ -30,3 +30,40 @@ p {
 .btn.btn-ghost {
   @apply shadow-none;
 }
+
+@layer base {
+  @font-face {
+    font-family: "ClashGrotesk";
+    src: url("../public/fonts/ClashGrotesk-Regular.woff2");
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "ClashGrotesk";
+    src: url("../public/fonts/ClashGrotesk-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #0d0e18;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border: 6px solid transparent;
+  border-radius: 20px;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: white;
+}

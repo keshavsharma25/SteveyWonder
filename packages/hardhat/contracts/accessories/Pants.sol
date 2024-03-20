@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.20;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { ERC721Burnable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
@@ -14,12 +14,17 @@ import { SteveyWonder } from "../SteveyWonder.sol";
 
 contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	uint256 private _nextTokenId = 1;
-	string[5] private colors = [
-		"#F1EBD4",
-		"#252532",
+	string[10] private _colors = [
+		"#DBD7D6",
 		"#141415",
+		"#404055",
+		"#EFE7C9",
+		"#DEB7E4",
+		"#84483B",
+		"#3B847F",
+		"#3B5C84",
 		"#4F3EE0",
-		"#84483B"
+		"#493B84"
 	];
 
 	address private _steveyWonderAddr;
@@ -67,9 +72,11 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			)
 		);
 
+		uint256 index = uint256(predictableRandom) % 13;
+
 		_pantsColor[tokenId].colorIndex =
-			uint256(uint8(predictableRandom[0])) %
-			5;
+			uint256(uint8(predictableRandom[index])) %
+			_colors.length;
 	}
 
 	function _pantsURI(uint256 _tokenId) internal view returns (string memory) {
@@ -86,7 +93,7 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 								_generateBase64(_tokenId),
 								'", "description": "This is an Inventory NFT item that can be traded or bought to make your SteveyWonder look awesome!",',
 								'"attributes": [{"trait_type": "type", "value": "half-Pants"}, {"trait_type": "color", "value": "',
-								colors[_pantsColor[_tokenId].colorIndex],
+								_colors[_pantsColor[_tokenId].colorIndex],
 								'"}]}'
 							)
 						)
@@ -107,7 +114,12 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<svg xmlns="http://www.w3.org/2000/svg"  width="400" height="400" viewBox="0 0 400 400" fill="none">',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" width="400" height="400" fill="black" fill-opacity="0.05"/>',
+				'<g transform="translate(-272.5,-520) scale(2, 2)">',
 				renderByTokenId(_tokenId),
+				"</g>",
 				"</svg>"
 			);
 	}
@@ -121,8 +133,8 @@ contract Pants is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	function _pantsSVG(uint256 _tokenId) public view returns (string memory) {
 		return
 			string.concat(
-				'<path fill-rule="evenodd" clip-rule="evenodd" d="M258.002 263.177H142.002V285.783V318.217V375.224H194.002V318.217H206.002V375.223H258.002V285.783H258.002V263.177Z" fill="',
-				colors[_pantsColor[_tokenId].colorIndex],
+				'<path fill-rule="evenodd" clip-rule="evenodd" d="M298.492 300.044H174.004V324.303V359.111V420.288H229.809V359.111H242.687V420.288H298.492V324.303H298.492V300.044Z" fill="',
+				_colors[_pantsColor[_tokenId].colorIndex],
 				'"/>'
 			);
 	}

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.20;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { ERC721Burnable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
@@ -19,6 +19,25 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 	address private _erc6551RegistryAddr;
 	address private _accImplementationAddr;
 	bytes32 private immutable _salt = bytes32(0);
+
+	struct Shoe {
+		uint256 top;
+		uint256 bottom;
+	}
+
+	mapping(uint256 => Shoe) private _shoes;
+	string[10] private _colors = [
+		"#000000",
+		"#FFFFFF",
+		"#C6444C",
+		"#C1582A",
+		"#D77808",
+		"#C03388",
+		"#257671",
+		"#3A8B9D",
+		"#2A82C1",
+		"#3D4FF2"
+	];
 
 	constructor(
 		address _initialOwner,
@@ -43,6 +62,32 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		);
 
 		_safeMint(to, tokenId);
+
+		bytes32 predictableRandom = keccak256(
+			abi.encodePacked(
+				tokenId,
+				blockhash(block.number - 1),
+				block.timestamp,
+				msg.sender,
+				address(this)
+			)
+		);
+
+		uint256 indexTop = uint256(predictableRandom) % 17;
+		uint256 indexBottom = uint256(predictableRandom) % 23;
+
+		uint256 top = uint256(uint8(predictableRandom[indexTop])) %
+			_colors.length;
+		uint256 bottom = uint256(uint8(predictableRandom[indexBottom])) %
+			_colors.length;
+
+		uint256 i = 2;
+
+		while (top == bottom) {
+			bottom = uint256(uint8(predictableRandom[i++])) % 3;
+		}
+
+		_shoes[tokenId] = Shoe(top, bottom);
 	}
 
 	function _ShoesURI(uint256 _tokenId) internal view returns (string memory) {
@@ -78,7 +123,12 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 		return
 			string.concat(
 				'<svg xmlns="http://www.w3.org/2000/svg"  width="400" height="400" viewBox="0 0 400 400" fill="none">',
+				'<rect id="',
+				Strings.toString(_tokenId),
+				'" width="400" height="400" fill="black" fill-opacity="0.05"/>',
+				'<g transform="translate(-272.5,-650) scale(2, 2)">',
 				renderByTokenId(_tokenId),
+				"</g>",
 				"</svg>"
 			);
 	}
@@ -96,10 +146,18 @@ contract Shoes is ERC721, ERC721Burnable, Ownable, ERC721Enumerable {
 			string.concat(
 				'<path id="',
 				Strings.toString(salt + _tokenId),
-				'" d="M146 383.086H190V385C190 386.657 188.657 388 187 388H149C147.343 388 146 386.657 146 385V383.086Z" fill="#F0EAEB"/>',
-				'<path d="M146 383.086C146 376.572 151.28 371.292 157.794 371.292H178.206C184.72 371.292 190 376.572 190 383.086V383.086H146V383.086Z" fill="black"/>',
-				'<path d="M210 383.085H254V385C254 386.657 252.657 388 251 388H213C211.343 388 210 386.657 210 385V383.085Z" fill="#F0EAEB"/>',
-				'<path d="M210 383.086C210 376.572 215.28 371.292 221.794 371.292H242.206C248.72 371.292 254 376.572 254 383.086V383.086H210V383.086Z" fill="black"/>'
+				'" d="M178.291 428.726H225.511V430.999C225.511 432.656 224.167 433.999 222.511 433.999H181.291C179.634 433.999 178.291 432.656 178.291 430.999V428.726Z" fill="',
+				_colors[uint256(_shoes[_tokenId].bottom)],
+				'"/>',
+				'<path d="M178.291 428.727C178.291 421.736 183.958 416.069 190.948 416.069H212.853C219.844 416.069 225.511 421.736 225.511 428.727H178.291Z" fill="',
+				_colors[uint256(_shoes[_tokenId].top)],
+				'"/>',
+				'<path d="M246.973 428.726H294.192V430.999C294.192 432.656 292.849 433.999 291.192 433.999H249.973C248.316 433.999 246.973 432.656 246.973 430.999V428.726Z" fill="',
+				_colors[uint256(_shoes[_tokenId].bottom)],
+				'"/>',
+				'<path d="M246.973 428.727C246.973 421.736 252.64 416.069 259.63 416.069H281.535C288.525 416.069 294.192 421.736 294.192 428.727H246.973Z" fill="',
+				_colors[uint256(_shoes[_tokenId].top)],
+				'"/>'
 			);
 	}
 

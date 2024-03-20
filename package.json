@@ -17,6 +17,7 @@
     "compile": "yarn workspace @se-2/hardhat compile",
     "generate": "yarn workspace @se-2/hardhat generate",
     "hardhat:lint": "yarn workspace @se-2/hardhat lint",
+    "hardhat:format": "yarn workspace @se-2/hardhat format",
     "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
     "hardhat:test": "yarn workspace @se-2/hardhat test",
     "test": "yarn hardhat:test",
@@ -29,7 +30,7 @@
     "vercel": "yarn workspace @se-2/nextjs vercel",
     "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
   },
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@4.0.2",
   "devDependencies": {
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3"

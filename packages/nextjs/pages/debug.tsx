@@ -4,10 +4,17 @@ import { useLocalStorage } from "usehooks-ts";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { ContractUI } from "~~/components/scaffold-eth";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
-import { getContractNames } from "~~/utils/scaffold-eth/contractNames";
 
 const selectedContractStorageKey = "scaffoldEth2.selectedContract";
-const contractNames = getContractNames();
+const contractNames: ContractName[] = [
+  "ERC6551Registry",
+  "SteveyWonder",
+  "TShirt",
+  "Pants",
+  "Hairs",
+  "Shoes",
+  "Glasses",
+];
 
 const Debug: NextPage = () => {
   const [selectedContract, setSelectedContract] = useLocalStorage<ContractName>(

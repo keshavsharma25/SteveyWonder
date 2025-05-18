@@ -4,9 +4,11 @@ import { TShirt, Pants, Shoes, Glasses, Hairs, SteveyWonder } from "../typechain
 
 async function main() {
   // const argumentsJson = JSON.parse(fs.readFileSync("../arguments.json").toLocaleString());
-  const provider = new ethers.providers.AlchemyProvider("sepolia", process.env.ALCHEMY_API_KEY);
+  //const provider = new ethers.providers.AlchemyProvider("sepolia", process.env.ALCHEMY_API_KEY);
 
-  const deployer = new ethers.Wallet(process.env.DEPLOYER_PRIVATE_KEY as string, provider);
+  //const deployer = new ethers.Wallet(process.env.DEPLOYER_PRIVATE_KEY as string, provider);
+
+  const deployer = (await ethers.getSigners())[0];
 
   const tshirt = (await ethers.getContract("TShirt", deployer)) as TShirt;
   const pants = (await ethers.getContract("Pants", deployer)) as Pants;

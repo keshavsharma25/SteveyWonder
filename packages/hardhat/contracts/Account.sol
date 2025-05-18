@@ -128,9 +128,7 @@ contract Account is
 		return IERC721(tokenContract).ownerOf(tokenId);
 	}
 
-	function _isValidSigner(
-		address signer
-	) internal view virtual returns (bool) {
+	function _isValidSigner(address signer) internal view virtual returns (bool) {
 		return signer == owner();
 	}
 
